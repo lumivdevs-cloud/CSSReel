@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cssreel — CSS Animation Resources</title>
+
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  CSSREEL — Design Tokens · by Andrew Avilan                 ║
+  ╠══════════════════════════════════════════════════════════════╣
+  ║  TIPOGRAFÍA                                                  ║
+  ║  Display / Logo / UI : "DM Mono" (Google Fonts)             ║
+  ║    → Monoespaciada con personalidad.                         ║
+  ║    → Usada en todo el sitio para coherencia visual.          ║
+  ╠══════════════════════════════════════════════════════════════╣
+  ║  PALETA DE COLORES                                           ║
+  ║  --bg-base      #080E09   Fondo principal                    ║
+  ║  --bg-surface   #0F1A11   Cards / superficies                ║
+  ║  --bg-raised    #162018   Hover / inputs                     ║
+  ║  --border       #1E3122   Bordes sutiles                     ║
+  ║  --border-mid   #2A4A2E   Bordes / separadores               ║
+  ║  --green-dim    #3D7A4A   Verde apagado (decorativo)         ║
+  ║  --green        #22C55E   Verde principal (acento)           ║
+  ║  --green-light  #4ADE80   Verde claro (hover)                ║
+  ║  --green-bright #BBFAB1   Verde casi blanco                  ║
+  ║  --text-primary #E8F5EA   Texto principal                    ║
+  ║  --text-muted   #7FA688   Texto secundario                   ║
+  ║  --text-faint   #3D6647   Texto terciario                    ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg-base:      #080E09;
+  --bg-surface:   #0F1A11;
+  --bg-raised:    #162018;
+  --border:       #1E3122;
+  --border-mid:   #2A4A2E;
+  --green-dim:    #3D7A4A;
+  --green:        #22C55E;
+  --green-light:  #4ADE80;
+  --green-bright: #BBFAB1;
+  --text-primary: #E8F5EA;
+  --text-muted:   #7FA688;
+  --text-faint:   #3D6647;
+  --font: 'DM Mono', 'Courier New', monospace;
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+  --t: 0.2s ease;
+}
+
+body { background:var(--bg-base); color:var(--text-primary); font-family:var(--font); font-size:14px; line-height:1.6; min-height:100vh; -webkit-font-smoothing:antialiased; }
+a { color:inherit; text-decoration:none; }
+button { font-family:var(--font); cursor:pointer; border:none; background:none; }
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--bg-base); }
+::-webkit-scrollbar-thumb { background:var(--border-mid); border-radius:3px; }
+
+/* Nav */
+.nav { position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:60px; background:rgba(8,14,9,.88); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); }
+.logo { font-size:17px; font-weight:500; display:flex; align-items:center; gap:2px; }
+.logo-css { color:var(--text-muted); }
+.logo-reel { color:var(--green); }
+.logo-dot { width:6px; height:6px; border-radius:50%; background:var(--green); margin-left:6px; animation:pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+.nav-links { display:flex; align-items:center; gap:2px; }
+.nav-link { font-size:12px; color:var(--text-muted); padding:6px 14px; border-radius:var(--radius-sm); transition:color var(--t),background var(--t); }
+.nav-link:hover,.nav-link.active { color:var(--text-primary); background:var(--bg-surface); }
+.nav-link.active { color:var(--green-light); }
+.nav-cta { font-size:12px; color:var(--bg-base); background:var(--green); padding:7px 16px; border-radius:var(--radius-sm); font-weight:500; transition:background var(--t); margin-left:8px; }
+.nav-cta:hover { background:var(--green-light); }
+.lang-switch { display:flex; align-items:center; border:1px solid var(--border-mid); border-radius:var(--radius-sm); overflow:hidden; margin-left:8px; background:var(--bg-surface); }
+.lang-sep { width:1px; height:14px; background:var(--border-mid); flex-shrink:0; }
+.lang-opt { font-size:11px; font-weight:500; padding:5px 9px; color:var(--text-faint); background:transparent; transition:all var(--t); letter-spacing:.06em; }
+.lang-opt.active { color:var(--green); background:rgba(34,197,94,.1); }
+.lang-opt:hover:not(.active) { color:var(--text-muted); background:var(--bg-raised); }
+
+/* Hero */
+.hero { padding:80px 40px 60px; max-width:900px; }
+.hero-eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:11px; color:var(--green); letter-spacing:.12em; text-transform:uppercase; margin-bottom:24px; padding:5px 12px; border:1px solid var(--border-mid); border-radius:var(--radius-sm); background:rgba(34,197,94,.05); }
+.hero-eyebrow::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--green); }
+.hero-title { font-size:clamp(44px,8vw,70px); font-weight:500; line-height:1; letter-spacing:-2px; margin-bottom:20px; }
+.hero-title .accent { color:var(--green); }
+.hero-title .dim { color:var(--text-faint); }
+.hero-desc { font-size:15px; color:var(--text-muted); max-width:480px; line-height:1.7; margin-bottom:36px; }
+.hero-desc strong { color:var(--text-primary); font-weight:400; }
+.hero-stats { display:flex; gap:32px; padding:20px 0; border-top:1px solid var(--border); }
+.stat { display:flex; flex-direction:column; gap:4px; }
+.stat-value { font-size:28px; font-weight:500; color:var(--green-bright); letter-spacing:-1px; }
+.stat-label { font-size:11px; color:var(--text-faint); letter-spacing:.08em; text-transform:uppercase; }
+
+/* Sections */
+.section { padding:0 40px 64px; display:none; }
+.section.active { display:block; }
+.section-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+.section-title { font-size:13px; color:var(--text-muted); letter-spacing:.1em; text-transform:uppercase; }
+.section-count { font-size:12px; color:var(--text-faint); }
+
+/* Category filter */
+.cats { display:flex; gap:6px; padding:0 40px 28px; flex-wrap:wrap; }
+.cat-btn { font-size:11px; color:var(--text-muted); padding:6px 14px; border-radius:var(--radius-sm); border:1px solid var(--border); background:transparent; letter-spacing:.05em; transition:all var(--t); }
+.cat-btn:hover { border-color:var(--border-mid); color:var(--text-primary); background:var(--bg-surface); }
+.cat-btn.active { border-color:var(--green); color:var(--green); background:rgba(34,197,94,.06); }
+
+/* Grid */
+.effects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; }
+.effect-card { background:var(--bg-base); display:flex; flex-direction:column; transition:background var(--t); }
+.effect-card:hover { background:var(--bg-surface); }
+.card-preview { height:180px; display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--border); cursor:pointer; position:relative; overflow:hidden; }
+.card-preview-hint { position:absolute; bottom:10px; right:12px; font-size:10px; color:var(--text-faint); opacity:0; transition:opacity var(--t); }
+.effect-card:hover .card-preview-hint { opacity:1; }
+.card-body { padding:16px 18px 14px; flex:1; }
+.card-name { font-size:13px; font-weight:500; color:var(--text-primary); margin-bottom:5px; }
+.card-desc { font-size:12px; color:var(--text-muted); line-height:1.55; margin-bottom:14px; }
+.card-footer { display:flex; align-items:center; gap:6px; }
+.tag { font-size:10px; color:var(--text-faint); padding:3px 8px; border:1px solid var(--border); border-radius:var(--radius-sm); }
+.copy-btn { margin-left:auto; font-size:11px; color:var(--green); padding:5px 12px; border:1px solid var(--border-mid); border-radius:var(--radius-sm); background:transparent; transition:all var(--t); }
+.copy-btn:hover { background:var(--green); color:var(--bg-base); border-color:var(--green); }
+.copy-btn.copied { background:var(--green); color:var(--bg-base); border-color:var(--green); }
+
+/* Modal */
+.modal-backdrop { display:none; position:fixed; inset:0; background:rgba(8,14,9,.9); backdrop-filter:blur(6px); z-index:200; align-items:center; justify-content:center; padding:20px; }
+.modal-backdrop.open { display:flex; }
+.modal { background:var(--bg-surface); border:1px solid var(--border-mid); border-radius:var(--radius-lg); width:100%; max-width:920px; overflow:hidden; animation:modal-in .18s ease; max-height:92vh; display:flex; flex-direction:column; }
+@keyframes modal-in { from{opacity:0;transform:translateY(10px) scale(.98)} to{opacity:1;transform:none} }
+
+.modal-head { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--border); flex-shrink:0; }
+.modal-name { font-size:14px; font-weight:500; color:var(--text-primary); }
+.modal-badge { font-size:10px; color:var(--green); background:rgba(34,197,94,.08); border:1px solid var(--border-mid); padding:3px 9px; border-radius:var(--radius-sm); letter-spacing:.08em; }
+.modal-close { width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:var(--radius-sm); color:var(--text-muted); font-size:15px; transition:all var(--t); }
+.modal-close:hover { background:var(--bg-raised); color:var(--text-primary); }
+
+/* Two-column modal body */
+.modal-body { display:grid; grid-template-columns:300px 1fr; overflow:hidden; flex:1; min-height:0; }
+
+/* Left col */
+.modal-left { display:flex; flex-direction:column; border-right:1px solid var(--border); overflow-y:auto; }
+.modal-preview { height:188px; display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--border); background:var(--bg-base); flex-shrink:0; position:relative; }
+.modal-preview-label { position:absolute; top:9px; left:12px; font-size:10px; color:var(--text-faint); letter-spacing:.06em; }
+
+/* Config panel */
+.config-panel { padding:16px; flex:1; }
+.config-title { font-size:10px; color:var(--green); letter-spacing:.12em; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; }
+.config-reset { font-size:10px; color:var(--text-faint); padding:3px 9px; border:1px solid var(--border); border-radius:var(--radius-sm); transition:all var(--t); }
+.config-reset:hover { color:var(--text-muted); border-color:var(--border-mid); }
+.config-row { margin-bottom:16px; }
+.config-label { display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--text-muted); margin-bottom:7px; }
+.config-val { font-size:11px; color:var(--text-primary); font-weight:500; font-family:var(--font); }
+
+/* Range */
+input[type=range] { width:100%; height:3px; appearance:none; -webkit-appearance:none; background:var(--border-mid); border-radius:2px; outline:none; cursor:pointer; }
+input[type=range]::-webkit-slider-thumb { appearance:none; width:14px; height:14px; border-radius:50%; background:var(--green); border:2px solid var(--bg-surface); cursor:pointer; transition:background var(--t); }
+input[type=range]::-webkit-slider-thumb:hover { background:var(--green-light); }
+
+/* Color */
+.color-row { display:flex; align-items:center; gap:10px; }
+input[type=color] { width:34px; height:30px; padding:2px; border:1px solid var(--border-mid); border-radius:var(--radius-sm); background:var(--bg-raised); cursor:pointer; outline:none; }
+input[type=color]::-webkit-color-swatch-wrapper { padding:0; border-radius:3px; }
+input[type=color]::-webkit-color-swatch { border:none; border-radius:3px; }
+.color-hex { font-size:11px; color:var(--text-primary); font-family:var(--font); background:var(--bg-raised); border:1px solid var(--border); border-radius:var(--radius-sm); padding:5px 9px; width:86px; outline:none; transition:border-color var(--t); }
+.color-hex:focus { border-color:var(--green); }
+
+/* Right col */
+.modal-right { display:flex; flex-direction:column; overflow:hidden; min-width:0; }
+.modal-tabs { display:flex; border-bottom:1px solid var(--border); flex-shrink:0; }
+.modal-tab { font-size:11px; color:var(--text-faint); padding:10px 18px; border-bottom:2px solid transparent; transition:all var(--t); letter-spacing:.05em; }
+.modal-tab.active { color:var(--green); border-bottom-color:var(--green); }
+.modal-tab:hover { color:var(--text-muted); }
+.code-wrap { flex:1; overflow-y:auto; background:var(--bg-base); padding:18px 20px; }
+pre.code { font-family:var(--font); font-size:11px; color:var(--text-muted); line-height:1.85; white-space:pre; overflow-x:auto; }
+
+/* Footer */
+.modal-foot { display:flex; align-items:center; gap:8px; padding:12px 20px; border-top:1px solid var(--border); flex-shrink:0; }
+.btn-primary { font-size:12px; background:var(--green); color:var(--bg-base); padding:8px 20px; border-radius:var(--radius-sm); font-weight:500; transition:background var(--t); }
+.btn-primary:hover { background:var(--green-light); }
+.btn-ghost { font-size:12px; color:var(--text-muted); padding:8px 16px; border:1px solid var(--border); border-radius:var(--radius-sm); transition:all var(--t); }
+.btn-ghost:hover { border-color:var(--border-mid); color:var(--text-primary); }
+.copy-notice { font-size:11px; color:var(--green); margin-left:auto; opacity:0; transition:opacity .3s; }
+.copy-notice.show { opacity:1; }
+
+/* About */
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px; }
+.about-card { background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; }
+.about-label { font-size:10px; color:var(--green); letter-spacing:.12em; text-transform:uppercase; margin-bottom:10px; }
+.about-title { font-size:20px; font-weight:500; color:var(--text-primary); margin-bottom:10px; letter-spacing:-.5px; }
+.about-card p { font-size:13px; color:var(--text-muted); line-height:1.7; }
+.skill-list { display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
+.skill-pill { font-size:11px; color:var(--text-muted); padding:4px 10px; border:1px solid var(--border); border-radius:var(--radius-sm); }
+.contact-links { display:flex; gap:10px; margin-top:24px; flex-wrap:wrap; }
+.contact-link { font-size:12px; color:var(--green); padding:7px 16px; border:1px solid var(--border-mid); border-radius:var(--radius-sm); transition:all var(--t); }
+.contact-link:hover { background:var(--green); color:var(--bg-base); border-color:var(--green); }
+
+/* Site footer */
+footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.footer-logo { font-size:14px; color:var(--text-faint); }
+.footer-logo span { color:var(--green); }
+.footer-copy { font-size:11px; color:var(--text-faint); }
+
+/* Demo animations */
+.demo-spinner { width:32px; height:32px; border:2px solid var(--border-mid); border-top-color:var(--green); border-radius:50%; animation:anim-spin .9s linear infinite; }
+@keyframes anim-spin { to{transform:rotate(360deg)} }
+.demo-pulse { width:32px; height:32px; border-radius:50%; background:var(--green); animation:anim-pulse 1.4s ease-in-out infinite; }
+@keyframes anim-pulse { 0%,100%{transform:scale(1);opacity:.9} 50%{transform:scale(1.35);opacity:.3} }
+.demo-wave { display:flex; align-items:center; gap:4px; height:40px; }
+.demo-wave-bar { width:4px; border-radius:2px; background:var(--green); animation:anim-wave .9s ease-in-out infinite; }
+@keyframes anim-wave { 0%,100%{height:10px;opacity:.4} 50%{height:32px;opacity:1} }
+.demo-bounce { width:24px; height:24px; border-radius:50%; background:var(--green); animation:anim-bounce .75s cubic-bezier(.36,.07,.19,.97) infinite; }
+@keyframes anim-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
+.demo-float { width:30px; height:30px; border:2px solid var(--green); border-radius:8px; animation:anim-float 2.5s ease-in-out infinite; }
+@keyframes anim-float { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-14px) rotate(6deg)} }
+.demo-cube { width:32px; height:32px; border:2px solid var(--green); transform-style:preserve-3d; animation:anim-cube 3s linear infinite; }
+@keyframes anim-cube { from{transform:rotateX(0) rotateY(0)} to{transform:rotateX(360deg) rotateY(360deg)} }
+.demo-hover-btn { font-size:12px; color:var(--green); padding:8px 20px; border:1px solid var(--green-dim); border-radius:4px; background:transparent; transition:all .22s ease; }
+.demo-hover-btn:hover { background:var(--green); color:var(--bg-base); transform:translateY(-2px); border-color:var(--green); }
+.demo-underline { font-size:14px; color:var(--text-primary); position:relative; display:inline-block; cursor:pointer; padding-bottom:3px; }
+.demo-underline::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:var(--green); transition:width .3s ease; }
+.demo-underline:hover::after { width:100%; }
+.demo-glow { width:100px; height:68px; background:var(--bg-raised); border:1px solid var(--border-mid); border-radius:10px; cursor:pointer; transition:border-color .3s,box-shadow .3s; }
+.demo-glow:hover { border-color:var(--green); box-shadow:0 0 20px rgba(34,197,94,.15),0 0 40px rgba(34,197,94,.05); }
+.demo-cursor { font-size:16px; color:var(--text-primary); display:flex; align-items:center; }
+.demo-cursor-bar { display:inline-block; width:2px; height:18px; background:var(--green); margin-left:3px; animation:anim-blink 1s step-end infinite; }
+@keyframes anim-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.demo-typing { font-size:13px; color:var(--green-bright); white-space:nowrap; overflow:hidden; width:0; border-right:2px solid var(--green); animation:anim-type 2.5s steps(14,end) infinite alternate,anim-blink .8s step-end infinite; }
+@keyframes anim-type { from{width:0} to{width:140px} }
+.demo-shimmer { width:120px; height:10px; border-radius:3px; background:linear-gradient(90deg,var(--bg-raised) 25%,var(--green-dim) 50%,var(--bg-raised) 75%); background-size:200% 100%; animation:anim-shimmer 1.5s infinite; }
+@keyframes anim-shimmer { from{background-position:200% 0} to{background-position:-200% 0} }
+.demo-glass-wrap { position:relative; width:110px; height:70px; background:var(--bg-raised); border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.demo-glass-blob { position:absolute; width:60px; height:60px; border-radius:50%; background:rgba(34,197,94,.25); top:-10px; left:-10px; }
+.demo-glass-blob2 { position:absolute; width:50px; height:50px; border-radius:50%; background:rgba(74,222,128,.15); bottom:-8px; right:-8px; }
+.demo-glass-card { position:relative; width:80px; height:50px; border-radius:6px; background:rgba(15,26,17,.5); border:1px solid rgba(34,197,94,.25); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+.demo-slide { font-size:14px; color:var(--text-primary); animation:anim-slide 1.8s ease infinite alternate; }
+@keyframes anim-slide { from{transform:translateX(-14px);opacity:0} to{transform:translateX(0);opacity:1} }
+
+/* ══════════════════════════════════════════════════════
+   METALLIC — Keyframes
+   ══════════════════════════════════════════════════════ */
+/* Shine sweep that travels left→right over the element */
+@keyframes anim-shine      { 0%{left:-70%} 100%{left:130%} }
+/* Organic blob morph using four-value border-radius */
+@keyframes anim-liquid     { 0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%} 50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%} }
+/* Gradient position sweep for gold shimmer */
+@keyframes anim-gold-shift { 0%{background-position:200% center} 100%{background-position:-200% center} }
+
+/* ══════════════════════════════════════════════════════
+   NEON — Keyframes
+   ══════════════════════════════════════════════════════ */
+/* Soft brightness pulse — used by neon glow & brushed steel */
+@keyframes anim-neon-pulse  { 0%,100%{opacity:1;filter:brightness(1)} 50%{opacity:.85;filter:brightness(1.6)} }
+/* Irregular spikes simulate a broken neon tube */
+@keyframes anim-flicker     { 0%,19%,21%,23%,25%,54%,56%,100%{opacity:1} 20%,24%,55%{opacity:.15} }
+/* currentColor-aware box-shadow pulse for neon border */
+@keyframes anim-neon-border { 0%,100%{box-shadow:0 0 4px currentColor,0 0 8px currentColor,inset 0 0 4px currentColor} 50%{box-shadow:0 0 12px currentColor,0 0 24px currentColor,0 0 48px currentColor,inset 0 0 10px currentColor} }
+/* Vertical scan line sweep */
+@keyframes anim-laser       { 0%{top:0} 100%{top:calc(100% - 2px)} }
+
+/* ══════════════════════════════════════════════════════
+   GLITCH — Keyframes
+   ══════════════════════════════════════════════════════ */
+/* Randomised text-shadow offset creating RGB split glitch */
+@keyframes anim-glitch {
+  0%,100%{text-shadow:none;transform:none}
+  10%{text-shadow:-3px 0 #ff0040,3px 0 #00ffff;transform:translate(-1px,0)}
+  20%{text-shadow:3px 0 #ff0040,-3px 0 #00ffff;transform:translate(1px,0)}
+  30%{text-shadow:none;transform:none}
+  40%{text-shadow:-2px 0 #ff0040,2px 0 #00ffff;transform:translate(-2px,0) skewX(1deg)}
+  41%{text-shadow:none;transform:none}
+  90%{text-shadow:3px 0 #ff0040,-3px 0 #00ffff;transform:translate(1px,0)}
+  91%{text-shadow:none;transform:none}
+}
+/* Subtle opacity flicker for CRT scanline overlay */
+@keyframes anim-scanlines   { 0%,100%{opacity:1} 48%,52%{opacity:.82} 50%{opacity:.78} }
+/* Alternating red/cyan channel displacement */
+@keyframes anim-chromatic   {
+  0%,100%{text-shadow:none}
+  25%{text-shadow:-3px 0 2px rgba(255,0,0,.7),3px 0 2px rgba(0,255,255,.7)}
+  50%{text-shadow:3px 0 2px rgba(255,0,0,.7),-3px 0 2px rgba(0,255,255,.7)}
+  75%{text-shadow:-1px 0 2px rgba(255,0,240,.6),1px 0 2px rgba(0,255,240,.6)}
+}
+
+/* ══════════════════════════════════════════════════════
+   LOADERS — Additional Keyframes
+   ══════════════════════════════════════════════════════ */
+/* Staggered dot bounce: opacity + translateY */
+@keyframes anim-dot      { 0%,80%,100%{transform:translateY(0);opacity:.3} 40%{transform:translateY(-14px);opacity:1} }
+/* Expanding ring radiates outward from center */
+@keyframes anim-ring-out { 0%{transform:scale(.3);opacity:1} 100%{transform:scale(2.2);opacity:0} }
+
+/* ══════════════════════════════════════════════════════
+   HOVER — Additional Keyframes
+   ══════════════════════════════════════════════════════ */
+/* Magnetic ripple ring that bursts out from the element */
+@keyframes anim-mag-ring { 0%{transform:scale(1);opacity:.8} 100%{transform:scale(1.9);opacity:0} }
+
+/* ══════════════════════════════════════════════════════
+   TRANSFORMS — Additional Keyframes
+   ══════════════════════════════════════════════════════ */
+/* Rapid horizontal oscillation — great for error states */
+@keyframes anim-shake     { 0%,100%{transform:translateX(0)} 15%,45%,75%{transform:translateX(-7px)} 30%,60%,90%{transform:translateX(7px)} }
+/* Pendulum swing — set transform-origin: top center on the element */
+@keyframes anim-pendulum  { 0%,100%{transform:rotate(-28deg)} 50%{transform:rotate(28deg)} }
+/* Arm pivot for orbit — the child dot rides along */
+@keyframes anim-orbit-arm { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+/* Spring bounce entrance */
+@keyframes anim-spring    { 0%{transform:scale(0) rotate(-10deg)} 60%{transform:scale(1.1) rotate(3deg)} 80%{transform:scale(.95) rotate(-1deg)} 100%{transform:scale(1) rotate(0deg)} }
+
+/* ══════════════════════════════════════════════════════
+   INTERACTIVE BUTTONS — Keyframes
+   ══════════════════════════════════════════════════════ */
+/* Plane flies right and scales down */
+@keyframes anim-fly-out   { 0%{transform:translateX(0) scale(1);opacity:1} 100%{transform:translateX(120px) scale(.5);opacity:0} }
+/* Electric rapid jitter */
+@keyframes anim-electric-jitter { 0%,100%{transform:translate(0)} 10%,30%,50%,70%,90%{transform:translate(-3px,1px) skewX(-2deg)} 20%,40%,60%,80%{transform:translate(3px,-1px) skewX(2deg)} }
+/* Freeze pulse */
+@keyframes anim-freeze-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(100,200,255,.6)} 50%{box-shadow:0 0 0 8px rgba(100,200,255,0)} }
+/* Countdown number pop */
+@keyframes anim-num-pop    { 0%{transform:scale(1.8);opacity:0} 30%{opacity:1;transform:scale(1)} 80%{opacity:1} 100%{opacity:0;transform:scale(.6)} }
+/* Bullet projectile */
+@keyframes anim-bullet-fly { 0%{transform:translateX(0) scaleX(1);opacity:1} 100%{transform:translateX(200px) scaleX(2.5);opacity:0} }
+
+/* ══════════════════════════════════════════════════════
+   KEYFRAMES — Additional
+   ══════════════════════════════════════════════════════ */
+/* Heartbeat double-bump */
+@keyframes anim-heartbeat  { 0%,100%{transform:scale(1)} 14%{transform:scale(1.18)} 28%{transform:scale(1)} 42%{transform:scale(1.12)} 70%{transform:scale(1)} }
+/* Tada — attention seeker wobble */
+@keyframes anim-tada       { 0%,100%{transform:scale(1) rotate(0)} 10%,20%{transform:scale(.95) rotate(-3deg)} 30%,50%,70%,90%{transform:scale(1.06) rotate(3deg)} 40%,60%,80%{transform:scale(1.06) rotate(-3deg)} }
+/* Jelly squash & stretch */
+@keyframes anim-jelly      { 0%,100%{transform:scaleX(1) scaleY(1)} 25%{transform:scaleX(.93) scaleY(1.07)} 50%{transform:scaleX(1.07) scaleY(.93)} 75%{transform:scaleX(.97) scaleY(1.03)} }
+/* Rubber band horizontal stretch */
+@keyframes anim-rubber     { 0%,100%{transform:scaleX(1)} 30%{transform:scaleX(1.25)} 50%{transform:scaleX(.75)} 65%{transform:scaleX(1.15)} 80%{transform:scaleX(.95)} }
+/* Spiral rotation entrance */
+@keyframes anim-spiral     { 0%{transform:rotate(-720deg) scale(0);opacity:0} 80%{opacity:1} 100%{transform:rotate(0) scale(1);opacity:1} }
+
+/* ══════════════════════════════════════════════════════
+   GLITCH — Additional Keyframes
+   ══════════════════════════════════════════════════════ */
+/* Clip-path slice for static noise effect */
+@keyframes anim-static-slice { 0%,100%{clip-path:inset(0 0 99% 0)} 10%{clip-path:inset(5% 0 75% 0)} 20%{clip-path:inset(38% 0 45% 0)} 30%{clip-path:inset(62% 0 18% 0)} 40%{clip-path:inset(22% 0 58% 0)} 50%{clip-path:inset(78% 0 8% 0)} 60%{clip-path:inset(12% 0 72% 0)} 70%{clip-path:inset(48% 0 32% 0)} 80%{clip-path:inset(4% 0 88% 0)} 90%{clip-path:inset(92% 0 1% 0)} }
+/* VHS horizontal tracking line */
+@keyframes anim-vhs-track  { 0%,100%{clip-path:inset(0 0 98% 0);transform:translateX(0)} 25%{clip-path:inset(24% 0 72% 0);transform:translateX(-5px)} 50%{clip-path:inset(55% 0 40% 0);transform:translateX(4px)} 75%{clip-path:inset(80% 0 14% 0);transform:translateX(-3px)} }
+/* Gradient border card spin */
+@keyframes anim-grad-spin  { to{transform:rotate(360deg)} }
+
+@media (max-width:768px) {
+  .nav,.hero,.section,.cats,footer { padding-left:20px; padding-right:20px; }
+  .hero-title { font-size:40px; }
+  .about-grid { grid-template-columns:1fr; }
+  .modal-body { grid-template-columns:1fr; }
+  .modal-left { border-right:none; border-bottom:1px solid var(--border); }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">
+    <span class="logo-css">css</span><span class="logo-reel">reel</span>
+    <div class="logo-dot"></div>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showSection('effects',this)" data-i18n="nav_effects">effects</button>
+    <button class="nav-link" onclick="showSection('about',this)" data-i18n="nav_about">about</button>
+    <a class="nav-cta" href="https://github.com/andrewavilan" target="_blank">github</a>
+    <div class="lang-switch" title="Change language / Cambiar idioma" aria-label="Language selector">
+      <button class="lang-opt active" id="opt-en" onclick="setLang('en')">EN</button>
+      <span class="lang-sep"></span>
+      <button class="lang-opt" id="opt-es" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow" data-i18n="hero_eyebrow">css animation resources</div>
+  <h1 class="hero-title">copy.<span class="accent">paste</span>.<br><span class="dim">animate</span>.</h1>
+  <p class="hero-desc" data-i18n-html="hero_desc">A curated collection of <strong>CSS animations</strong> ready to drop into any project. Customize live — color, speed, size — then copy the exact code you need.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-value" id="total-count">14</span><span class="stat-label" data-i18n="stat_effects">effects</span></div>
+    <div class="stat"><span class="stat-value">11</span><span class="stat-label" data-i18n="stat_cats">categories</span></div>
+    <div class="stat"><span class="stat-value">0</span><span class="stat-label" data-i18n="stat_deps">dependencies</span></div>
+    <div class="stat"><span class="stat-value">~</span><span class="stat-label" data-i18n="stat_pure">pure css</span></div>
+  </div>
+</section>
+
+<div id="section-effects" class="section active">
+  <div class="cats" id="cats">
+    <button class="cat-btn active" onclick="filterCat('all',this)" data-i18n="cat_all">all</button>
+    <button class="cat-btn" onclick="filterCat('loader',this)" data-i18n="cat_loader">loaders</button>
+    <button class="cat-btn" onclick="filterCat('hover',this)" data-i18n="cat_hover">hover</button>
+    <button class="cat-btn" onclick="filterCat('text',this)" data-i18n="cat_text">text</button>
+    <button class="cat-btn" onclick="filterCat('keyframe',this)" data-i18n="cat_keyframe">keyframes</button>
+    <button class="cat-btn" onclick="filterCat('transform',this)" data-i18n="cat_transform">transforms</button>
+    <button class="cat-btn" onclick="filterCat('glass',this)" data-i18n="cat_glass">glassmorphism</button>
+    <button class="cat-btn" onclick="filterCat('metallic',this)" data-i18n="cat_metallic">metallic</button>
+    <button class="cat-btn" onclick="filterCat('neon',this)" data-i18n="cat_neon">neon</button>
+    <button class="cat-btn" onclick="filterCat('glitch',this)" data-i18n="cat_glitch">glitch</button>
+    <button class="cat-btn" onclick="filterCat('interactive',this)" data-i18n="cat_interactive">interactive</button>
+    <button class="cat-btn" onclick="filterCat('cursor',this)" data-i18n="cat_cursor">cursor</button>
+  </div>
+  <div class="section-header">
+    <span class="section-title" id="cat-label">all effects</span>
+    <span class="section-count" id="cat-count">14 effects</span>
+  </div>
+  <div class="effects-grid" id="effects-grid"></div>
+</div>
+
+<div id="section-about" class="section">
+  <div class="section-header"><span class="section-title" data-i18n="nav_about">about</span></div>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-label" data-i18n="about_proj_label">the project</div>
+      <div class="about-title">cssreel</div>
+      <p data-i18n="about_proj_p1">A personal library of CSS animations built and collected over time. Every snippet is copy-paste ready — customize it live, then grab your exact code.</p>
+      <p style="margin-top:10px;" data-i18n="about_proj_p2">No npm installs, no config files. Just CSS doing what it does best.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-label" data-i18n="about_dev_label">the dev</div>
+      <div class="about-title">Andrew Avilan</div>
+      <p data-i18n="about_dev_p">Frontend developer focused on clean UI, CSS craft, and making the web feel alive. Based in Medellín, Colombia.</p>
+      <div class="skill-list">
+        <span class="skill-pill">CSS</span><span class="skill-pill">HTML</span>
+        <span class="skill-pill">JavaScript</span><span class="skill-pill">React</span>
+        <span class="skill-pill">Animations</span><span class="skill-pill">UI Design</span>
+      </div>
+    </div>
+  </div>
+  <div class="about-card" style="margin-bottom:20px;">
+    <div class="about-label" data-i18n="about_how_label">how to use</div>
+    <div class="about-title" style="font-size:16px;margin-bottom:10px;" data-i18n="about_how_title">three steps</div>
+    <p style="font-size:13px;color:var(--text-muted);line-height:1.9;" data-i18n-html="about_how_steps">1. Browse effects and click any card to open the live editor.<br>2. Adjust color, speed, size, opacity and border-radius in real time.<br>3. Hit <span style="color:var(--green)">copy code</span> — the snippet includes your exact custom values.</p>
+  </div>
+  <div class="contact-links">
+    <a class="contact-link" href="https://github.com/andrewavilan" target="_blank">github</a>
+    <a class="contact-link" href="https://linkedin.com/in/andrewavilan" target="_blank">linkedin</a>
+    <a class="contact-link" href="mailto:hello@andrewavilan.dev">email</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">css<span>reel</span></div>
+  <div class="footer-copy" data-i18n="footer_copy">built by andrew avilan — medellín, colombia</div>
+</footer>
+
+<!-- Modal -->
+<div class="modal-backdrop" id="modal-backdrop" onclick="handleBackdropClick(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-name" id="modal-name">effect</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="modal-badge" data-i18n="modal_badge">live editor</span>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <!-- Left: preview + controls -->
+      <div class="modal-left">
+        <div class="modal-preview" id="modal-preview">
+          <span class="modal-preview-label" data-i18n="modal_preview">preview</span>
+        </div>
+        <div class="config-panel" id="config-panel">
+          <div class="config-title">
+            <span>customize</span>
+            <button class="config-reset" onclick="resetCfg()">reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: code -->
+      <div class="modal-right">
+        <div class="modal-tabs">
+          <button class="modal-tab" onclick="switchTab('html',this)">html</button>
+          <button class="modal-tab" onclick="switchTab('css',this)">css</button>
+          <button class="modal-tab active" onclick="switchTab('both',this)">html + css</button>
+        </div>
+        <div class="code-wrap">
+          <pre class="code" id="modal-code"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn-primary" id="modal-copy-btn" onclick="copyModal()" data-i18n="copy_code">copy code</button>
+      <button class="btn-ghost" onclick="closeModal()" data-i18n="close">close</button>
+      <span class="copy-notice" id="copy-notice" data-i18n="copy_notice">snippet copied with your values</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const EFFECTS = [
+  {
+    id:1, cat:'loader', name:'spin loader',
+    desc:'Classic rotating border. Works on any block element with border-radius.',
+    defaults:{ color:'#22C55E', duration:0.9, size:36, radius:50, opacity:1 },
+    buildPreview(c) {
+      const d = document.createElement('div');
+      Object.assign(d.style,{ width:c.size+'px', height:c.size+'px', border:'2px solid #1E3122', borderTopColor:c.color, borderRadius:c.radius+'%', opacity:c.opacity, animation:`anim-spin ${c.duration}s linear infinite` });
+      return d;
+    },
+    html:() => `<div class="spinner"></div>`,
+    css:(c) => `.spinner {\n  width: ${c.size}px;\n  height: ${c.size}px;\n  border: 2px solid #1E3122;\n  border-top-color: ${c.color};\n  border-radius: ${c.radius}%;\n  opacity: ${c.opacity};\n  animation: spin ${c.duration}s linear infinite;\n}\n\n@keyframes spin {\n  to { transform: rotate(360deg); }\n}`
+  },
+  {
+    id:2, cat:'loader', name:'pulse dot',
+    desc:'Breathing scale + opacity animation. Great for status indicators.',
+    defaults:{ color:'#22C55E', duration:1.4, size:32, radius:50, opacity:0.9 },
+    buildPreview(c) {
+      const d = document.createElement('div');
+      Object.assign(d.style,{ width:c.size+'px', height:c.size+'px', background:c.color, borderRadius:c.radius+'%', opacity:c.opacity, animation:`anim-pulse ${c.duration}s ease-in-out infinite` });
+      return d;
+    },
+    html:() => `<div class="pulse"></div>`,
+    css:(c) => `.pulse {\n  width: ${c.size}px;\n  height: ${c.size}px;\n  border-radius: ${c.radius}%;\n  background: ${c.color};\n  opacity: ${c.opacity};\n  animation: pulse ${c.duration}s ease-in-out infinite;\n}\n\n@keyframes pulse {\n  0%, 100% { transform: scale(1); opacity: ${c.opacity}; }\n  50%       { transform: scale(1.35); opacity: ${+(c.opacity*.3).toFixed(2)}; }\n}`
+  },
+  {
+    id:3, cat:'loader', name:'wave bars',
+    desc:'Equalizer-style bars with staggered delays for a flowing wave effect.',
+    defaults:{ color:'#22C55E', duration:0.9, size:4, radius:2, opacity:1 },
+    buildPreview(c) {
+      const w = document.createElement('div');
+      w.style.cssText = 'display:flex;align-items:center;gap:4px;height:40px;';
+      [0,.15,.3,.15,0].forEach(d => { const b=document.createElement('div'); Object.assign(b.style,{ width:c.size+'px', height:'10px', background:c.color, borderRadius:c.radius+'px', opacity:c.opacity, animation:`anim-wave ${c.duration}s ease-in-out ${d}s infinite` }); w.appendChild(b); });
+      return w;
+    },
+    html:() => `<div class="wave">\n  <div class="bar"></div>\n  <div class="bar"></div>\n  <div class="bar"></div>\n  <div class="bar"></div>\n  <div class="bar"></div>\n</div>`,
+    css:(c) => `.wave { display: flex; align-items: center; gap: 4px; }\n\n.bar {\n  width: ${c.size}px;\n  border-radius: ${c.radius}px;\n  background: ${c.color};\n  opacity: ${c.opacity};\n  animation: wave ${c.duration}s ease-in-out infinite;\n}\n.bar:nth-child(2) { animation-delay: 0.15s; }\n.bar:nth-child(3) { animation-delay: 0.30s; }\n.bar:nth-child(4) { animation-delay: 0.15s; }\n\n@keyframes wave {\n  0%, 100% { height: 10px; opacity: ${+(c.opacity*.4).toFixed(2)}; }\n  50%       { height: 32px; opacity: ${c.opacity}; }\n}`
+  },
+  {
+    id:4, cat:'keyframe', name:'bounce',
+    desc:'Smooth ball bounce using cubic-bezier timing for a natural feel.',
+    defaults:{ color:'#22C55E', duration:0.75, size:24, radius:50, opacity:1 },
+    buildPreview(c) {
+      const d = document.createElement('div');
+      Object.assign(d.style,{ width:c.size+'px', height:c.size+'px', background:c.color, borderRadius:c.radius+'%', opacity:c.opacity, animation:`anim-bounce ${c.duration}s cubic-bezier(.36,.07,.19,.97) infinite` });
+      return d;
+    },
+    html:() => `<div class="bounce-ball"></div>`,
+    css:(c) => `.bounce-ball {\n  width: ${c.size}px;\n  height: ${c.size}px;\n  border-radius: ${c.radius}%;\n  background: ${c.color};\n  opacity: ${c.opacity};\n  animation: bounce ${c.duration}s cubic-bezier(.36,.07,.19,.97) infinite;\n}\n\n@keyframes bounce {\n  0%, 100% { transform: translateY(0); }\n  50%       { transform: translateY(-${Math.round(c.size*.8)}px); }\n}`
+  },
+  {
+    id:5, cat:'keyframe', name:'float & rotate',
+    desc:'Combines translateY with a subtle rotation for an organic floating feel.',
+    defaults:{ color:'#22C55E', duration:2.5, size:30, radius:25, opacity:1 },
+    buildPreview(c) {
+      const d = document.createElement('div');
+      Object.assign(d.style,{ width:c.size+'px', height:c.size+'px', border:`2px solid ${c.color}`, borderRadius:c.radius+'%', opacity:c.opacity, animation:`anim-float ${c.duration}s ease-in-out infinite` });
+      return d;
+    },
+    html:() => `<div class="float-box"></div>`,
+    css:(c) => `.float-box {\n  width: ${c.size}px;\n  height: ${c.size}px;\n  border: 2px solid ${c.color};\n  border-radius: ${c.radius}%;\n  opacity: ${c.opacity};\n  animation: float ${c.duration}s ease-in-out infinite;\n}\n\n@keyframes float {\n  0%, 100% { transform: translateY(0) rotate(0deg); }\n  50%       { transform: translateY(-14px) rotate(6deg); }\n}`
+  },
+  {
+    id:6, cat:'keyframe', name:'3d cube spin',
+    desc:'Pure CSS 3D rotation using rotateX + rotateY with preserve-3d.',
+    defaults:{ color:'#22C55E', duration:3, size:32, radius:0, opacity:1 },
+    buildPreview(c) {
+      const d = document.createElement('div');
+      Object.assign(d.style,{ width:c.size+'px', height:c.size+'px', border:`2px solid ${c.color}`, borderRadius:c.radius+'px', transformStyle:'preserve-3d', opacity:c.opacity, animation:`anim-cube ${c.duration}s linear infinite` });
+      return d;
+    },
+    html:() => `<div class="cube"></div>`,
+    css:(c) => `.cube {\n  width: ${c.size}px;\n  height: ${c.size}px;\n  border: 2px solid ${c.color};\n  border-radius: ${c.radius}px;\n  opacity: ${c.opacity};\n  transform-style: preserve-3d;\n  animation: cube-spin ${c.duration}s linear infinite;\n}\n\n@keyframes cube-spin {\n  from { transform: rotateX(0deg) rotateY(0deg); }\n  to   { transform: rotateX(360deg) rotateY(360deg); }\n}`
+  },
+  {
+    id:7, cat:'hover', name:'lift button',
+    desc:'Button fills and lifts on hover. Clean transition with translateY.',
+    defaults:{ color:'#22C55E', duration:0.22, size:13, radius:4, opacity:1 },
+    buildPreview(c) {
+      const b = document.createElement('button');
+      b.textContent = 'hover me';
+      Object.assign(b.style,{ fontSize:c.size+'px', color:c.color, padding:'8px 20px', border:`1px solid ${c.color}88`, borderRadius:c.radius+'px', background:'transparent', opacity:c.opacity, cursor:'pointer', transition:`all ${c.duration}s ease`, fontFamily:'var(--font)' });
+      b.onmouseenter = () => { b.style.background=c.color; b.style.color='#080E09'; b.style.transform='translateY(-2px)'; };
+      b.onmouseleave = () => { b.style.background='transparent'; b.style.color=c.color; b.style.transform=''; };
+      return b;
+    },
+    html:() => `<button class="lift-btn">hover me</button>`,
+    css:(c) => `.lift-btn {\n  font-size: ${c.size}px;\n  color: ${c.color};\n  padding: 8px 20px;\n  border: 1px solid ${c.color}88;\n  border-radius: ${c.radius}px;\n  background: transparent;\n  opacity: ${c.opacity};\n  cursor: pointer;\n  transition: all ${c.duration}s ease;\n}\n\n.lift-btn:hover {\n  background: ${c.color};\n  color: #080E09;\n  transform: translateY(-2px);\n  border-color: ${c.color};\n}`
+  },
+  {
+    id:8, cat:'hover', name:'underline reveal',
+    desc:'Underline slides in from left using width transition on ::after.',
+    defaults:{ color:'#22C55E', duration:0.3, size:14, radius:0, opacity:1 },
+    buildPreview(c) {
+      const span = document.createElement('span');
+      span.textContent = 'hover this link';
+      Object.assign(span.style,{ fontSize:c.size+'px', color:'#E8F5EA', position:'relative', display:'inline-block', paddingBottom:'3px', cursor:'pointer', opacity:c.opacity });
+      const line = document.createElement('span');
+      Object.assign(line.style,{ position:'absolute', bottom:'0', left:'0', height:'1px', width:'0', background:c.color, transition:`width ${c.duration}s ease`, display:'block' });
+      span.appendChild(line);
+      span.onmouseenter = () => line.style.width = '100%';
+      span.onmouseleave = () => line.style.width = '0';
+      return span;
+    },
+    html:() => `<a class="reveal-link">hover this link</a>`,
+    css:(c) => `.reveal-link {\n  font-size: ${c.size}px;\n  position: relative;\n  display: inline-block;\n  padding-bottom: 3px;\n  opacity: ${c.opacity};\n  cursor: pointer;\n}\n\n.reveal-link::after {\n  content: '';\n  position: absolute;\n  bottom: 0; left: 0;\n  width: 0; height: 1px;\n  background: ${c.color};\n  transition: width ${c.duration}s ease;\n}\n\n.reveal-link:hover::after { width: 100%; }`
+  },
+  {
+    id:9, cat:'hover', name:'glow card',
+    desc:'Border color and box-shadow transition on hover. Subtle but satisfying.',
+    defaults:{ color:'#22C55E', duration:0.3, size:90, radius:10, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b] = hexToRgb(c.color);
+      const d = document.createElement('div');
+      Object.assign(d.style,{ width:c.size+'px', height:Math.round(c.size*.65)+'px', background:'#162018', border:'1px solid #2A4A2E', borderRadius:c.radius+'px', cursor:'pointer', opacity:c.opacity, transition:`border-color ${c.duration}s,box-shadow ${c.duration}s` });
+      d.onmouseenter = () => { d.style.borderColor=c.color; d.style.boxShadow=`0 0 20px rgba(${r},${g},${b},.18),0 0 40px rgba(${r},${g},${b},.06)`; };
+      d.onmouseleave = () => { d.style.borderColor='#2A4A2E'; d.style.boxShadow='none'; };
+      return d;
+    },
+    html:() => `<div class="glow-card"></div>`,
+    css:(c) => { const [r,g,b]=hexToRgb(c.color); return `.glow-card {\n  width: ${c.size}px;\n  height: ${Math.round(c.size*.65)}px;\n  border: 1px solid #2A4A2E;\n  border-radius: ${c.radius}px;\n  opacity: ${c.opacity};\n  transition: border-color ${c.duration}s, box-shadow ${c.duration}s;\n}\n\n.glow-card:hover {\n  border-color: ${c.color};\n  box-shadow:\n    0 0 20px rgba(${r},${g},${b},.18),\n    0 0 40px rgba(${r},${g},${b},.06);\n}`; }
+  },
+  {
+    id:10, cat:'text', name:'blinking cursor',
+    desc:'Terminal caret using ::after and step-end timing.',
+    defaults:{ color:'#22C55E', duration:1, size:18, radius:0, opacity:1 },
+    buildPreview(c) {
+      const w = document.createElement('div');
+      w.style.cssText = `font-size:${c.size}px;color:#E8F5EA;display:flex;align-items:center;opacity:${c.opacity};font-family:var(--font)`;
+      const bar = document.createElement('span');
+      Object.assign(bar.style,{ display:'inline-block', width:'2px', height:c.size+'px', background:c.color, marginLeft:'3px', animation:`anim-blink ${c.duration}s step-end infinite` });
+      w.innerHTML = 'cssreel';
+      w.appendChild(bar);
+      return w;
+    },
+    html:() => `<div class="cursor-text">cssreel</div>`,
+    css:(c) => `.cursor-text {\n  font-size: ${c.size}px;\n  opacity: ${c.opacity};\n}\n\n.cursor-text::after {\n  content: '|';\n  margin-left: 2px;\n  color: ${c.color};\n  animation: blink ${c.duration}s step-end infinite;\n}\n\n@keyframes blink {\n  0%, 100% { opacity: 1; }\n  50%       { opacity: 0; }\n}`
+  },
+  {
+    id:11, cat:'text', name:'typing reveal',
+    desc:'Typewriter effect using width animation and steps(). No JS needed.',
+    defaults:{ color:'#22C55E', duration:2.5, size:14, radius:0, opacity:1 },
+    buildPreview(c) {
+      const d = document.createElement('div');
+      d.textContent = 'hello, world.';
+      Object.assign(d.style,{ fontSize:c.size+'px', color:'#BBFAB1', whiteSpace:'nowrap', overflow:'hidden', width:'0', borderRight:`2px solid ${c.color}`, opacity:c.opacity, animation:`anim-type ${c.duration}s steps(14,end) infinite alternate,anim-blink .8s step-end infinite`, fontFamily:'var(--font)' });
+      return d;
+    },
+    html:() => `<div class="typewriter">hello, world.</div>`,
+    css:(c) => `.typewriter {\n  font-size: ${c.size}px;\n  white-space: nowrap;\n  overflow: hidden;\n  width: 0;\n  opacity: ${c.opacity};\n  border-right: 2px solid ${c.color};\n  animation:\n    typing ${c.duration}s steps(14, end) infinite alternate,\n    blink 0.8s step-end infinite;\n}\n\n@keyframes typing {\n  from { width: 0; }\n  to   { width: 140px; }\n}\n\n@keyframes blink {\n  0%, 100% { border-color: ${c.color}; }\n  50%       { border-color: transparent; }\n}`
+  },
+  {
+    id:12, cat:'text', name:'shimmer skeleton',
+    desc:'Loading skeleton with background-position animation.',
+    defaults:{ color:'#3D7A4A', duration:1.5, size:12, radius:4, opacity:1 },
+    buildPreview(c) {
+      const d = document.createElement('div');
+      Object.assign(d.style,{ width:'120px', height:c.size+'px', borderRadius:c.radius+'px', opacity:c.opacity, background:`linear-gradient(90deg,#162018 25%,${c.color} 50%,#162018 75%)`, backgroundSize:'200% 100%', animation:`anim-shimmer ${c.duration}s infinite` });
+      return d;
+    },
+    html:() => `<div class="skeleton"></div>`,
+    css:(c) => `.skeleton {\n  height: ${c.size}px;\n  border-radius: ${c.radius}px;\n  opacity: ${c.opacity};\n  background: linear-gradient(\n    90deg,\n    #162018 25%,\n    ${c.color} 50%,\n    #162018 75%\n  );\n  background-size: 200% 100%;\n  animation: shimmer ${c.duration}s infinite;\n}\n\n@keyframes shimmer {\n  from { background-position:  200% 0; }\n  to   { background-position: -200% 0; }\n}`
+  },
+  {
+    id:13, cat:'glass', name:'glass card',
+    desc:'Frosted glass using backdrop-filter: blur. Layer over a colorful background.',
+    defaults:{ color:'#22C55E', duration:0, size:80, radius:8, opacity:0.5 },
+    buildPreview(c) {
+      const [r,g,b] = hexToRgb(c.color);
+      const w = document.createElement('div');
+      Object.assign(w.style,{ position:'relative', width:'110px', height:'70px', background:'#162018', borderRadius:'10px', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center' });
+      const blob = document.createElement('div');
+      Object.assign(blob.style,{ position:'absolute', width:'60px', height:'60px', borderRadius:'50%', background:`rgba(${r},${g},${b},.3)`, top:'-10px', left:'-10px' });
+      const blob2 = document.createElement('div');
+      Object.assign(blob2.style,{ position:'absolute', width:'50px', height:'50px', borderRadius:'50%', background:`rgba(${r},${g},${b},.15)`, bottom:'-8px', right:'-8px' });
+      const card = document.createElement('div');
+      Object.assign(card.style,{ position:'relative', width:c.size+'px', height:Math.round(c.size*.62)+'px', borderRadius:c.radius+'px', background:`rgba(15,26,17,${c.opacity})`, border:`1px solid rgba(${r},${g},${b},.25)`, backdropFilter:'blur(8px)', WebkitBackdropFilter:'blur(8px)' });
+      w.appendChild(blob); w.appendChild(blob2); w.appendChild(card);
+      return w;
+    },
+    html:() => `<div class="scene">\n  <div class="blob"></div>\n  <div class="glass-card"></div>\n</div>`,
+    css:(c) => { const [r,g,b]=hexToRgb(c.color); return `.scene {\n  position: relative;\n  width: 200px; height: 140px;\n  background: #0F1A11;\n  border-radius: 12px;\n  overflow: hidden;\n}\n\n.blob {\n  position: absolute;\n  width: 100px; height: 100px;\n  border-radius: 50%;\n  background: rgba(${r},${g},${b},.28);\n  top: -20px; left: -20px;\n}\n\n.glass-card {\n  position: absolute;\n  inset: 20px;\n  border-radius: ${c.radius}px;\n  background: rgba(15,26,17,${c.opacity});\n  border: 1px solid rgba(${r},${g},${b},.22);\n  backdrop-filter: blur(12px);\n  -webkit-backdrop-filter: blur(12px);\n}`; }
+  },
+  {
+    id:14, cat:'transform', name:'slide in',
+    desc:'Element enters from the left. Use animation-delay for stagger effects.',
+    defaults:{ color:'#E8F5EA', duration:0.6, size:14, radius:0, opacity:1 },
+    buildPreview(c) {
+      const d = document.createElement('div');
+      d.textContent = 'hello, world';
+      Object.assign(d.style,{ fontSize:c.size+'px', color:c.color, animation:`anim-slide ${c.duration}s ease infinite alternate`, fontFamily:'var(--font)' });
+      return d;
+    },
+    html:() => `<div class="slide-in">hello, world</div>`,
+    css:(c) => `.slide-in {\n  font-size: ${c.size}px;\n  color: ${c.color};\n  animation: slide-in ${c.duration}s ease forwards;\n}\n\n@keyframes slide-in {\n  from { transform: translateX(-20px); opacity: 0; }\n  to   { transform: translateX(0); opacity: 1; }\n}`
+  },
+
+  // ── METALLIC ─────────────────────────────────────────────────────────────
+  {
+    id:15, cat:'metallic', name:'chrome shine',
+    desc:'Metallic gradient with a sweeping highlight. Color controls the tint.',
+    defaults:{ color:'#22C55E', duration:1.8, size:40, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const dark=`rgb(${Math.round(r*.12)},${Math.round(g*.12)},${Math.round(b*.12)})`;
+      const mid=`rgb(${Math.min(255,Math.round(r*.4+90))},${Math.min(255,Math.round(g*.4+90))},${Math.min(255,Math.round(b*.4+90))})`;
+      const hi=`rgb(${Math.min(255,Math.round(r*.6+180))},${Math.min(255,Math.round(g*.6+180))},${Math.min(255,Math.round(b*.6+180))})`;
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;width:${Math.round(c.size*2.4)}px;height:${Math.round(c.size*.8)}px;border-radius:${c.radius}px;overflow:hidden;opacity:${c.opacity};background:linear-gradient(135deg,${dark} 0%,${mid} 30%,${hi} 50%,${mid} 70%,${dark} 100%)`;
+      const shine=document.createElement('div');
+      shine.style.cssText=`position:absolute;top:0;left:-70%;width:35%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-15deg);animation:anim-shine ${c.duration}s ease-in-out infinite`;
+      wrap.appendChild(shine);
+      return wrap;
+    },
+    html:()=>`<div class="chrome"></div>`,
+    css:(c)=>{
+      const [r,g,b]=hexToRgb(c.color);
+      const dark=`rgb(${Math.round(r*.12)},${Math.round(g*.12)},${Math.round(b*.12)})`;
+      const mid=`rgb(${Math.min(255,Math.round(r*.4+90))},${Math.min(255,Math.round(g*.4+90))},${Math.min(255,Math.round(b*.4+90))})`;
+      const hi=`rgb(${Math.min(255,Math.round(r*.6+180))},${Math.min(255,Math.round(g*.6+180))},${Math.min(255,Math.round(b*.6+180))})`;
+      return `.chrome {\n  position: relative;\n  width: ${Math.round(c.size*2.4)}px;\n  height: ${Math.round(c.size*.8)}px;\n  border-radius: ${c.radius}px;\n  overflow: hidden;\n  opacity: ${c.opacity};\n  background: linear-gradient(\n    135deg,\n    ${dark} 0%, ${mid} 30%, ${hi} 50%,\n    ${mid} 70%, ${dark} 100%\n  );\n}\n\n.chrome::after {\n  content: '';\n  position: absolute;\n  top: 0; left: -70%;\n  width: 35%; height: 100%;\n  background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);\n  transform: skewX(-15deg);\n  animation: chrome-shine ${c.duration}s ease-in-out infinite;\n}\n\n@keyframes chrome-shine {\n  from { left: -70%; }\n  to   { left: 130%; }\n}`;
+    }
+  },
+  {
+    id:16, cat:'metallic', name:'gold text',
+    desc:'Animated gold gradient fill using background-clip: text.',
+    defaults:{ color:'#D4AF37', duration:2.5, size:22, radius:0, opacity:1 },
+    buildPreview(c) {
+      const span=document.createElement('span');
+      span.textContent='GOLD';
+      Object.assign(span.style,{
+        fontSize:Math.round(c.size*1.4)+'px', fontWeight:'500', letterSpacing:'-1px',
+        fontFamily:'var(--font)', opacity:c.opacity,
+        background:`linear-gradient(90deg,${c.color} 0%,#fffbe6 30%,#a07820 55%,${c.color} 75%,#fffbe6 100%)`,
+        backgroundSize:'200% auto', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent',
+        backgroundClip:'text', animation:`anim-gold-shift ${c.duration}s linear infinite`
+      });
+      return span;
+    },
+    html:()=>`<span class="gold-text">GOLD</span>`,
+    css:(c)=>`.gold-text {\n  font-size: ${Math.round(c.size*1.4)}px;\n  font-weight: 500;\n  opacity: ${c.opacity};\n  background: linear-gradient(\n    90deg,\n    ${c.color} 0%, #fffbe6 30%, #a07820 55%,\n    ${c.color} 75%, #fffbe6 100%\n  );\n  background-size: 200% auto;\n  background-clip: text;\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n  animation: gold-shift ${c.duration}s linear infinite;\n}\n\n@keyframes gold-shift {\n  from { background-position: 200% center; }\n  to   { background-position: -200% center; }\n}`
+  },
+  {
+    id:17, cat:'metallic', name:'brushed steel',
+    desc:'Repeating micro-lines over a dark gradient simulate a brushed metal surface.',
+    defaults:{ color:'#8899AA', duration:2, size:40, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const d=document.createElement('div');
+      Object.assign(d.style,{
+        width:Math.round(c.size*2.2)+'px', height:c.size+'px', borderRadius:c.radius+'px', opacity:c.opacity,
+        background:`repeating-linear-gradient(90deg,rgba(${r},${g},${b},.06) 0px,rgba(${r},${g},${b},.03) 1px,transparent 1px,transparent 3px),linear-gradient(135deg,#111 0%,#3a3a3a 25%,#6a6a6a 50%,#3a3a3a 75%,#111 100%)`,
+        boxShadow:`inset 0 1px 0 rgba(255,255,255,.12),inset 0 -1px 0 rgba(0,0,0,.4)`,
+        animation:`anim-neon-pulse ${c.duration}s ease-in-out infinite`
+      });
+      return d;
+    },
+    html:()=>`<div class="brushed"></div>`,
+    css:(c)=>{
+      const [r,g,b]=hexToRgb(c.color);
+      return `.brushed {\n  width: ${Math.round(c.size*2.2)}px;\n  height: ${c.size}px;\n  border-radius: ${c.radius}px;\n  opacity: ${c.opacity};\n  background:\n    repeating-linear-gradient(\n      90deg,\n      rgba(${r},${g},${b},.06) 0px, rgba(${r},${g},${b},.03) 1px,\n      transparent 1px, transparent 3px\n    ),\n    linear-gradient(\n      135deg,\n      #111 0%, #3a3a3a 25%, #6a6a6a 50%,\n      #3a3a3a 75%, #111 100%\n    );\n  box-shadow:\n    inset 0 1px 0 rgba(255,255,255,.12),\n    inset 0 -1px 0 rgba(0,0,0,.4);\n  animation: brushed-pulse ${c.duration}s ease-in-out infinite;\n}\n\n@keyframes brushed-pulse {\n  0%, 100% { filter: brightness(1); }\n  50%       { filter: brightness(1.15); }\n}`;
+    }
+  },
+  {
+    id:18, cat:'metallic', name:'liquid metal',
+    desc:'Morphing blob with a radial metallic gradient. Adjust color for silver/gold/copper.',
+    defaults:{ color:'#AABBCC', duration:3, size:52, radius:0, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const lo=`rgb(${Math.max(0,r-60)},${Math.max(0,g-60)},${Math.max(0,b-60)})`;
+      const hi=`rgb(${Math.min(255,r+80)},${Math.min(255,g+80)},${Math.min(255,b+80)})`;
+      const d=document.createElement('div');
+      Object.assign(d.style,{
+        width:c.size+'px', height:c.size+'px', opacity:c.opacity,
+        background:`radial-gradient(circle at 35% 35%,${hi} 0%,${c.color} 45%,${lo} 100%)`,
+        boxShadow:`0 8px 24px rgba(${r},${g},${b},.3),inset 0 1px 0 rgba(255,255,255,.35)`,
+        animation:`anim-liquid ${c.duration}s ease-in-out infinite`
+      });
+      return d;
+    },
+    html:()=>`<div class="liquid-metal"></div>`,
+    css:(c)=>{
+      const [r,g,b]=hexToRgb(c.color);
+      const lo=`rgb(${Math.max(0,r-60)},${Math.max(0,g-60)},${Math.max(0,b-60)})`;
+      const hi=`rgb(${Math.min(255,r+80)},${Math.min(255,g+80)},${Math.min(255,b+80)})`;
+      return `.liquid-metal {\n  width: ${c.size}px;\n  height: ${c.size}px;\n  opacity: ${c.opacity};\n  background: radial-gradient(\n    circle at 35% 35%,\n    ${hi} 0%, ${c.color} 45%, ${lo} 100%\n  );\n  box-shadow:\n    0 8px 24px rgba(${r},${g},${b},.3),\n    inset 0 1px 0 rgba(255,255,255,.35);\n  animation: liquid-morph ${c.duration}s ease-in-out infinite;\n}\n\n@keyframes liquid-morph {\n  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }\n  50%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }\n}`;
+    }
+  },
+
+  // ── NEON ─────────────────────────────────────────────────────────────────
+  {
+    id:19, cat:'neon', name:'neon glow',
+    desc:'Multi-layer text-shadow creates a realistic neon tube glow with soft pulse.',
+    defaults:{ color:'#ff2d78', duration:2, size:22, radius:0, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const span=document.createElement('span');
+      span.textContent='NEON';
+      Object.assign(span.style,{
+        fontSize:Math.round(c.size*1.4)+'px', fontWeight:'500', letterSpacing:'6px',
+        fontFamily:'var(--font)', color:c.color, opacity:c.opacity,
+        textShadow:`0 0 4px #fff,0 0 8px ${c.color},0 0 16px ${c.color},0 0 32px rgba(${r},${g},${b},.7),0 0 64px rgba(${r},${g},${b},.4)`,
+        animation:`anim-neon-pulse ${c.duration}s ease-in-out infinite`
+      });
+      return span;
+    },
+    html:()=>`<span class="neon-text">NEON</span>`,
+    css:(c)=>{
+      const [r,g,b]=hexToRgb(c.color);
+      return `.neon-text {\n  font-size: ${Math.round(c.size*1.4)}px;\n  font-weight: 500;\n  letter-spacing: 6px;\n  color: ${c.color};\n  opacity: ${c.opacity};\n  text-shadow:\n    0 0 4px #fff,\n    0 0 8px ${c.color},\n    0 0 16px ${c.color},\n    0 0 32px rgba(${r},${g},${b},.7),\n    0 0 64px rgba(${r},${g},${b},.4);\n  animation: neon-pulse ${c.duration}s ease-in-out infinite;\n}\n\n@keyframes neon-pulse {\n  0%, 100% { opacity: 1; filter: brightness(1); }\n  50%       { opacity: .85; filter: brightness(1.6); }\n}`;
+    }
+  },
+  {
+    id:20, cat:'neon', name:'neon flicker',
+    desc:'Broken neon sign effect with irregular opacity drops. No JS, pure keyframe.',
+    defaults:{ color:'#00f0ff', duration:3, size:20, radius:0, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const span=document.createElement('span');
+      span.textContent='OPEN';
+      Object.assign(span.style,{
+        fontSize:Math.round(c.size*1.4)+'px', fontWeight:'500', letterSpacing:'8px',
+        fontFamily:'var(--font)', color:c.color, opacity:c.opacity,
+        textShadow:`0 0 5px ${c.color},0 0 15px rgba(${r},${g},${b},.8),0 0 30px rgba(${r},${g},${b},.5)`,
+        animation:`anim-flicker ${c.duration}s linear infinite`
+      });
+      return span;
+    },
+    html:()=>`<span class="flicker-sign">OPEN</span>`,
+    css:(c)=>{
+      const [r,g,b]=hexToRgb(c.color);
+      return `.flicker-sign {\n  font-size: ${Math.round(c.size*1.4)}px;\n  font-weight: 500;\n  letter-spacing: 8px;\n  color: ${c.color};\n  opacity: ${c.opacity};\n  text-shadow:\n    0 0 5px ${c.color},\n    0 0 15px rgba(${r},${g},${b},.8),\n    0 0 30px rgba(${r},${g},${b},.5);\n  animation: neon-flicker ${c.duration}s linear infinite;\n}\n\n@keyframes neon-flicker {\n  0%,19%,21%,23%,25%,54%,56%,100% { opacity: 1; }\n  20%,24%,55%                       { opacity: .15; }\n}`;
+    }
+  },
+  {
+    id:21, cat:'neon', name:'neon border',
+    desc:'Pulsing neon outline with inset and outset glow via currentColor box-shadow.',
+    defaults:{ color:'#a855f7', duration:1.6, size:54, radius:8, opacity:1 },
+    buildPreview(c) {
+      const d=document.createElement('div');
+      Object.assign(d.style,{
+        width:Math.round(c.size*1.6)+'px', height:c.size+'px', borderRadius:c.radius+'px',
+        border:`1px solid ${c.color}`, color:c.color, opacity:c.opacity,
+        animation:`anim-neon-border ${c.duration}s ease-in-out infinite`
+      });
+      return d;
+    },
+    html:()=>`<div class="neon-box"></div>`,
+    css:(c)=>{
+      const [r,g,b]=hexToRgb(c.color);
+      return `.neon-box {\n  width: ${Math.round(c.size*1.6)}px;\n  height: ${c.size}px;\n  border-radius: ${c.radius}px;\n  border: 1px solid ${c.color};\n  opacity: ${c.opacity};\n  animation: neon-border-pulse ${c.duration}s ease-in-out infinite;\n}\n\n@keyframes neon-border-pulse {\n  0%, 100% {\n    box-shadow:\n      0 0 4px ${c.color}, 0 0 8px ${c.color},\n      inset 0 0 4px ${c.color};\n  }\n  50% {\n    box-shadow:\n      0 0 12px ${c.color}, 0 0 24px ${c.color},\n      0 0 48px rgba(${r},${g},${b},.6),\n      inset 0 0 12px ${c.color};\n  }\n}`;
+    }
+  },
+  {
+    id:22, cat:'neon', name:'laser scan',
+    desc:'A glowing beam sweeps top-to-bottom inside a contained box. Sci-fi staple.',
+    defaults:{ color:'#22C55E', duration:2, size:54, radius:4, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;width:${Math.round(c.size*1.6)}px;height:${c.size}px;border-radius:${c.radius}px;border:1px solid rgba(${r},${g},${b},.35);overflow:hidden;opacity:${c.opacity};background:rgba(${r},${g},${b},.04)`;
+      const line=document.createElement('div');
+      line.style.cssText=`position:absolute;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,${c.color},transparent);box-shadow:0 0 8px ${c.color},0 0 20px rgba(${r},${g},${b},.6);animation:anim-laser ${c.duration}s ease-in-out infinite alternate`;
+      wrap.appendChild(line);
+      return wrap;
+    },
+    html:()=>`<div class="laser-wrap">\n  <div class="laser-beam"></div>\n</div>`,
+    css:(c)=>{
+      const [r,g,b]=hexToRgb(c.color);
+      return `.laser-wrap {\n  position: relative;\n  width: ${Math.round(c.size*1.6)}px;\n  height: ${c.size}px;\n  border-radius: ${c.radius}px;\n  border: 1px solid rgba(${r},${g},${b},.35);\n  overflow: hidden;\n  background: rgba(${r},${g},${b},.04);\n  opacity: ${c.opacity};\n}\n\n.laser-beam {\n  position: absolute;\n  left: 0; width: 100%; height: 2px;\n  background: linear-gradient(90deg, transparent, ${c.color}, transparent);\n  box-shadow: 0 0 8px ${c.color}, 0 0 20px rgba(${r},${g},${b},.6);\n  animation: laser-scan ${c.duration}s ease-in-out infinite alternate;\n}\n\n@keyframes laser-scan {\n  from { top: 0; }\n  to   { top: calc(100% - 2px); }\n}`;
+    }
+  },
+
+  // ── GLITCH ───────────────────────────────────────────────────────────────
+  {
+    id:23, cat:'glitch', name:'glitch text',
+    desc:'RGB color-channel split with random transform shifts. Chaotic and sharp.',
+    defaults:{ color:'#E8F5EA', duration:2.5, size:20, radius:0, opacity:1 },
+    buildPreview(c) {
+      const d=document.createElement('div');
+      d.textContent='GLITCH';
+      Object.assign(d.style,{
+        fontSize:c.size+'px', fontWeight:'500', letterSpacing:'4px',
+        fontFamily:'var(--font)', color:c.color, opacity:c.opacity,
+        animation:`anim-glitch ${c.duration}s infinite`
+      });
+      return d;
+    },
+    html:()=>`<div class="glitch-text">GLITCH</div>`,
+    css:(c)=>`.glitch-text {\n  font-size: ${c.size}px;\n  font-weight: 500;\n  letter-spacing: 4px;\n  color: ${c.color};\n  opacity: ${c.opacity};\n  animation: glitch ${c.duration}s infinite;\n}\n\n@keyframes glitch {\n  0%,100% { text-shadow: none; transform: none; }\n  10%     { text-shadow: -3px 0 #ff0040, 3px 0 #00ffff; transform: translate(-1px,0); }\n  20%     { text-shadow:  3px 0 #ff0040,-3px 0 #00ffff; transform: translate(1px,0); }\n  30%     { text-shadow: none; transform: none; }\n  40%     { text-shadow: -2px 0 #ff0040, 2px 0 #00ffff; transform: translate(-2px,0) skewX(1deg); }\n  41%     { text-shadow: none; transform: none; }\n  90%     { text-shadow:  3px 0 #ff0040,-3px 0 #00ffff; transform: translate(1px,0); }\n  91%     { text-shadow: none; transform: none; }\n}`
+  },
+  {
+    id:24, cat:'glitch', name:'crt scanlines',
+    desc:'Horizontal scanline overlay with subtle flicker fakes a CRT monitor look.',
+    defaults:{ color:'#22C55E', duration:1.4, size:54, radius:4, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;width:${Math.round(c.size*2)}px;height:${Math.round(c.size*1.1)}px;border-radius:${c.radius}px;overflow:hidden;border:1px solid rgba(${r},${g},${b},.35);background:rgba(${r},${g},${b},.07);opacity:${c.opacity}`;
+      const text=document.createElement('div');
+      text.textContent='C:\\> _';
+      text.style.cssText=`position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(${r},${g},${b},.9);font-family:var(--font);letter-spacing:2px`;
+      const lines=document.createElement('div');
+      lines.style.cssText=`position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 4px);animation:anim-scanlines ${c.duration}s steps(1) infinite`;
+      wrap.appendChild(text);
+      wrap.appendChild(lines);
+      return wrap;
+    },
+    html:()=>`<div class="crt-screen">\n  <div class="crt-content">C:\\&gt; _</div>\n  <div class="crt-lines"></div>\n</div>`,
+    css:(c)=>{
+      const [r,g,b]=hexToRgb(c.color);
+      return `.crt-screen {\n  position: relative;\n  width: ${Math.round(c.size*2)}px;\n  height: ${Math.round(c.size*1.1)}px;\n  border-radius: ${c.radius}px;\n  overflow: hidden;\n  border: 1px solid rgba(${r},${g},${b},.35);\n  background: rgba(${r},${g},${b},.07);\n  opacity: ${c.opacity};\n}\n\n.crt-content {\n  position: absolute; inset: 0;\n  display: flex; align-items: center; justify-content: center;\n  font-size: 10px; letter-spacing: 2px;\n  color: rgba(${r},${g},${b},.9);\n}\n\n.crt-lines {\n  position: absolute; inset: 0;\n  background: repeating-linear-gradient(\n    0deg,\n    transparent, transparent 2px,\n    rgba(0,0,0,.18) 2px, rgba(0,0,0,.18) 4px\n  );\n  animation: crt-flicker ${c.duration}s steps(1) infinite;\n}\n\n@keyframes crt-flicker {\n  0%, 100% { opacity: 1; }\n  48%, 52% { opacity: .82; }\n  50%       { opacity: .78; }\n}`;
+    }
+  },
+  {
+    id:25, cat:'glitch', name:'chromatic shift',
+    desc:'RGB channel displacement — red and cyan offset layers alternate over time.',
+    defaults:{ color:'#ffffff', duration:2, size:22, radius:0, opacity:1 },
+    buildPreview(c) {
+      const d=document.createElement('div');
+      d.textContent='RGB';
+      Object.assign(d.style,{
+        fontSize:Math.round(c.size*2)+'px', fontWeight:'500', letterSpacing:'6px',
+        fontFamily:'var(--font)', color:c.color, opacity:c.opacity,
+        animation:`anim-chromatic ${c.duration}s ease-in-out infinite`
+      });
+      return d;
+    },
+    html:()=>`<div class="rgb-shift">RGB</div>`,
+    css:(c)=>`.rgb-shift {\n  font-size: ${Math.round(c.size*2)}px;\n  font-weight: 500;\n  letter-spacing: 6px;\n  color: ${c.color};\n  opacity: ${c.opacity};\n  animation: chromatic-shift ${c.duration}s ease-in-out infinite;\n}\n\n@keyframes chromatic-shift {\n  0%, 100% { text-shadow: none; }\n  25%       { text-shadow: -3px 0 2px rgba(255,0,0,.7), 3px 0 2px rgba(0,255,255,.7); }\n  50%       { text-shadow:  3px 0 2px rgba(255,0,0,.7),-3px 0 2px rgba(0,255,255,.7); }\n  75%       { text-shadow: -1px 0 2px rgba(255,0,240,.6), 1px 0 2px rgba(0,255,240,.6); }\n}`
+  },
+
+  // ── HOVER (additional) ────────────────────────────────────────────────────
+  {
+    id:26, cat:'hover', name:'flip 360',
+    desc:'Full Y-axis rotation on hover. Works on any element — drop it in a perspective container.',
+    defaults:{ color:'#22C55E', duration:0.6, size:13, radius:4, opacity:1 },
+    buildPreview(c) {
+      const wrap=document.createElement('div');
+      wrap.style.cssText='perspective:600px;';
+      const b=document.createElement('button');
+      b.textContent='flip me';
+      Object.assign(b.style,{ fontSize:c.size+'px', color:c.color, padding:'8px 20px', border:`1px solid ${c.color}66`, borderRadius:c.radius+'px', background:'transparent', opacity:c.opacity, cursor:'pointer', transition:`transform ${c.duration}s ease`, fontFamily:'var(--font)', display:'block' });
+      b.onmouseenter=()=>b.style.transform='rotateY(360deg)';
+      b.onmouseleave=()=>{ b.style.transition='none'; b.style.transform='rotateY(0deg)'; setTimeout(()=>b.style.transition=`transform ${c.duration}s ease`,50); };
+      wrap.appendChild(b); return wrap;
+    },
+    html:()=>`<div style="perspective:600px">\n  <button class="flip-btn">flip me</button>\n</div>`,
+    css:(c)=>`.flip-btn {\n  font-size: ${c.size}px;\n  color: ${c.color};\n  padding: 8px 20px;\n  border: 1px solid ${c.color}66;\n  border-radius: ${c.radius}px;\n  background: transparent;\n  opacity: ${c.opacity};\n  cursor: pointer;\n  transition: transform ${c.duration}s ease;\n}\n\n.flip-btn:hover {\n  transform: rotateY(360deg);\n}\n\n/* Wrap in a perspective container: */\n/* .parent { perspective: 600px; } */`
+  },
+  {
+    id:27, cat:'hover', name:'border draw',
+    desc:'Border traces in from the left on hover via clip-path. No SVG, no JavaScript.',
+    defaults:{ color:'#22C55E', duration:0.4, size:13, radius:4, opacity:1 },
+    buildPreview(c) {
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;display:inline-block;padding:8px 20px;cursor:pointer;opacity:${c.opacity}`;
+      const border=document.createElement('div');
+      border.style.cssText=`position:absolute;inset:0;border:1px solid ${c.color};border-radius:${c.radius}px;clip-path:inset(0 100% 0 0);transition:clip-path ${c.duration}s ease`;
+      const text=document.createElement('span');
+      text.textContent='hover me';
+      text.style.cssText=`font-size:${c.size}px;color:${c.color};font-family:var(--font);position:relative;z-index:1`;
+      wrap.appendChild(border); wrap.appendChild(text);
+      wrap.onmouseenter=()=>border.style.clipPath='inset(0 0% 0 0)';
+      wrap.onmouseleave=()=>border.style.clipPath='inset(0 100% 0 0)';
+      return wrap;
+    },
+    html:()=>`<div class="border-draw">\n  <span>hover me</span>\n</div>`,
+    css:(c)=>`.border-draw {\n  position: relative;\n  display: inline-block;\n  padding: 8px 20px;\n  opacity: ${c.opacity};\n  cursor: pointer;\n}\n\n.border-draw::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  border: 1px solid ${c.color};\n  border-radius: ${c.radius}px;\n  clip-path: inset(0 100% 0 0);\n  transition: clip-path ${c.duration}s ease;\n}\n\n.border-draw:hover::before {\n  clip-path: inset(0 0% 0 0);\n}`
+  },
+  {
+    id:28, cat:'hover', name:'fill sweep',
+    desc:'Background fills in from bottom on hover. Color inverts automatically for readability.',
+    defaults:{ color:'#22C55E', duration:0.28, size:13, radius:4, opacity:1 },
+    buildPreview(c) {
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;overflow:hidden;display:inline-block;border-radius:${c.radius}px;border:1px solid ${c.color}55;opacity:${c.opacity};cursor:pointer`;
+      const fill=document.createElement('div');
+      fill.style.cssText=`position:absolute;inset:0;background:${c.color};transform:translateY(101%);transition:transform ${c.duration}s cubic-bezier(.4,0,.2,1)`;
+      const text=document.createElement('span');
+      text.textContent='hover me';
+      text.style.cssText=`font-size:${c.size}px;color:${c.color};padding:8px 20px;display:block;font-family:var(--font);position:relative;z-index:1;transition:color ${c.duration}s ease`;
+      wrap.appendChild(fill); wrap.appendChild(text);
+      wrap.onmouseenter=()=>{ fill.style.transform='translateY(0)'; text.style.color='#080E09'; };
+      wrap.onmouseleave=()=>{ fill.style.transform='translateY(101%)'; text.style.color=c.color; };
+      return wrap;
+    },
+    html:()=>`<button class="fill-sweep">hover me</button>`,
+    css:(c)=>`.fill-sweep {\n  position: relative;\n  overflow: hidden;\n  display: inline-block;\n  font-size: ${c.size}px;\n  color: ${c.color};\n  padding: 8px 20px;\n  border-radius: ${c.radius}px;\n  border: 1px solid ${c.color}55;\n  background: transparent;\n  opacity: ${c.opacity};\n  cursor: pointer;\n  transition: color ${c.duration}s ease;\n}\n\n.fill-sweep::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background: ${c.color};\n  transform: translateY(101%);\n  transition: transform ${c.duration}s cubic-bezier(.4,0,.2,1);\n}\n\n.fill-sweep:hover { color: #080E09; }\n.fill-sweep:hover::before { transform: translateY(0); }`
+  },
+  {
+    id:29, cat:'hover', name:'3d tilt',
+    desc:'Perspective card tilt on hover. Tactile depth effect — zero JavaScript.',
+    defaults:{ color:'#22C55E', duration:0.3, size:80, radius:10, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText='perspective:500px;';
+      const card=document.createElement('div');
+      Object.assign(card.style,{ width:Math.round(c.size*1.4)+'px', height:c.size+'px', borderRadius:c.radius+'px', border:`1px solid rgba(${r},${g},${b},.3)`, background:`rgba(${r},${g},${b},.06)`, opacity:c.opacity, cursor:'pointer', transition:`transform ${c.duration}s ease,box-shadow ${c.duration}s ease`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'11px', color:`rgba(${r},${g},${b},.6)`, fontFamily:'var(--font)' });
+      card.textContent='↖ tilt';
+      card.onmouseenter=()=>{ card.style.transform='rotateX(-8deg) rotateY(10deg)'; card.style.boxShadow=`6px 14px 32px rgba(${r},${g},${b},.2)`; };
+      card.onmouseleave=()=>{ card.style.transform=''; card.style.boxShadow=''; };
+      wrap.appendChild(card); return wrap;
+    },
+    html:()=>`<div style="perspective:500px">\n  <div class="tilt-card">content</div>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.tilt-card {\n  width: ${Math.round(c.size*1.4)}px;\n  height: ${c.size}px;\n  border-radius: ${c.radius}px;\n  border: 1px solid rgba(${r},${g},${b},.3);\n  background: rgba(${r},${g},${b},.06);\n  opacity: ${c.opacity};\n  cursor: pointer;\n  transition: transform ${c.duration}s ease, box-shadow ${c.duration}s ease;\n}\n\n.tilt-card:hover {\n  transform: rotateX(-8deg) rotateY(10deg);\n  box-shadow: 6px 14px 32px rgba(${r},${g},${b},.2);\n}`; }
+  },
+
+  // ── LOADERS (additional) ──────────────────────────────────────────────────
+  {
+    id:30, cat:'loader', name:'dots bounce',
+    desc:'Three dots bouncing with staggered delays. The most universally understood loader.',
+    defaults:{ color:'#22C55E', duration:0.7, size:10, radius:50, opacity:1 },
+    buildPreview(c) {
+      const w=document.createElement('div');
+      w.style.cssText='display:flex;align-items:center;gap:6px;';
+      [0,.18,.36].forEach(delay=>{
+        const d=document.createElement('div');
+        Object.assign(d.style,{ width:c.size+'px', height:c.size+'px', borderRadius:c.radius+'%', background:c.color, opacity:c.opacity, animation:`anim-dot ${c.duration}s ease-in-out ${delay}s infinite` });
+        w.appendChild(d);
+      });
+      return w;
+    },
+    html:()=>`<div class="dots">\n  <div class="dot"></div>\n  <div class="dot"></div>\n  <div class="dot"></div>\n</div>`,
+    css:(c)=>`.dots { display: flex; align-items: center; gap: 6px; }\n\n.dot {\n  width: ${c.size}px;\n  height: ${c.size}px;\n  border-radius: ${c.radius}%;\n  background: ${c.color};\n  opacity: ${c.opacity};\n  animation: dots-bounce ${c.duration}s ease-in-out infinite;\n}\n.dot:nth-child(2) { animation-delay: 0.18s; }\n.dot:nth-child(3) { animation-delay: 0.36s; }\n\n@keyframes dots-bounce {\n  0%, 80%, 100% { transform: translateY(0);  opacity: ${+(c.opacity*.3).toFixed(2)}; }\n  40%           { transform: translateY(-14px); opacity: ${c.opacity}; }\n}`
+  },
+  {
+    id:31, cat:'loader', name:'ring pulse',
+    desc:'Concentric rings radiate outward from a center dot. Great for "scanning" states.',
+    defaults:{ color:'#22C55E', duration:1.6, size:16, radius:50, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;width:${c.size*3}px;height:${c.size*3}px;display:flex;align-items:center;justify-content:center;opacity:${c.opacity}`;
+      [0,.5,1].forEach(delay=>{
+        const ring=document.createElement('div');
+        Object.assign(ring.style,{ position:'absolute', width:c.size+'px', height:c.size+'px', borderRadius:'50%', border:`2px solid rgba(${r},${g},${b},.7)`, animation:`anim-ring-out ${c.duration}s ease-out ${delay}s infinite` });
+        wrap.appendChild(ring);
+      });
+      const dot=document.createElement('div');
+      Object.assign(dot.style,{ width:Math.round(c.size*.4)+'px', height:Math.round(c.size*.4)+'px', borderRadius:'50%', background:c.color, zIndex:'1' });
+      wrap.appendChild(dot);
+      return wrap;
+    },
+    html:()=>`<div class="ring-loader">\n  <div class="ring"></div>\n  <div class="ring"></div>\n  <div class="ring"></div>\n  <div class="ring-dot"></div>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.ring-loader {\n  position: relative;\n  width: ${c.size*3}px; height: ${c.size*3}px;\n  display: flex; align-items: center; justify-content: center;\n  opacity: ${c.opacity};\n}\n\n.ring {\n  position: absolute;\n  width: ${c.size}px; height: ${c.size}px;\n  border-radius: 50%;\n  border: 2px solid rgba(${r},${g},${b},.7);\n  animation: ring-out ${c.duration}s ease-out infinite;\n}\n.ring:nth-child(2) { animation-delay: ${+(c.duration/3).toFixed(2)}s; }\n.ring:nth-child(3) { animation-delay: ${+(c.duration/3*2).toFixed(2)}s; }\n\n.ring-dot {\n  width: ${Math.round(c.size*.4)}px; height: ${Math.round(c.size*.4)}px;\n  border-radius: 50%;\n  background: ${c.color};\n}\n\n@keyframes ring-out {\n  from { transform: scale(.3); opacity: 1; }\n  to   { transform: scale(2.2); opacity: 0; }\n}`; }
+  },
+
+  // ── TRANSFORMS (additional) ───────────────────────────────────────────────
+  {
+    id:32, cat:'transform', name:'shake',
+    desc:'Rapid horizontal oscillation. Ideal for error states, wrong-password feedback.',
+    defaults:{ color:'#E8F5EA', duration:0.5, size:14, radius:4, opacity:1 },
+    buildPreview(c) {
+      const b=document.createElement('button');
+      b.textContent='click me';
+      Object.assign(b.style,{ fontSize:c.size+'px', color:c.color, padding:'8px 20px', border:`1px solid ${c.color}44`, borderRadius:c.radius+'px', background:'transparent', opacity:c.opacity, cursor:'pointer', fontFamily:'var(--font)' });
+      b.onclick=()=>{ b.style.animation='none'; setTimeout(()=>{ b.style.animation=`anim-shake ${c.duration}s ease`; },10); };
+      return b;
+    },
+    html:()=>`<button class="shake-btn" onclick="this.classList.toggle('shaking')">click me</button>`,
+    css:(c)=>`.shake-btn {\n  font-size: ${c.size}px;\n  color: ${c.color};\n  padding: 8px 20px;\n  border: 1px solid ${c.color}44;\n  border-radius: ${c.radius}px;\n  background: transparent;\n  opacity: ${c.opacity};\n  cursor: pointer;\n}\n\n.shake-btn.shaking {\n  animation: shake ${c.duration}s ease;\n}\n\n@keyframes shake {\n  0%, 100%     { transform: translateX(0); }\n  15%, 45%, 75% { transform: translateX(-7px); }\n  30%, 60%, 90% { transform: translateX(7px); }\n}`
+  },
+  {
+    id:33, cat:'transform', name:'pendulum',
+    desc:'Swings from its top edge like a pendulum. Set transform-origin: top center.',
+    defaults:{ color:'#22C55E', duration:1.5, size:30, radius:4, opacity:1 },
+    buildPreview(c) {
+      const wrap=document.createElement('div');
+      wrap.style.cssText='display:flex;justify-content:center;padding-top:12px;';
+      const d=document.createElement('div');
+      Object.assign(d.style,{ width:Math.round(c.size*.5)+'px', height:c.size+'px', background:c.color, borderRadius:`0 0 ${c.radius}px ${c.radius}px`, opacity:c.opacity, transformOrigin:'top center', animation:`anim-pendulum ${c.duration}s ease-in-out infinite` });
+      wrap.appendChild(d); return wrap;
+    },
+    html:()=>`<div class="pendulum"></div>`,
+    css:(c)=>`.pendulum {\n  width: ${Math.round(c.size*.5)}px;\n  height: ${c.size}px;\n  background: ${c.color};\n  border-radius: 0 0 ${c.radius}px ${c.radius}px;\n  opacity: ${c.opacity};\n  transform-origin: top center;\n  animation: pendulum ${c.duration}s ease-in-out infinite;\n}\n\n@keyframes pendulum {\n  0%, 100% { transform: rotate(-28deg); }\n  50%       { transform: rotate(28deg); }\n}`
+  },
+  {
+    id:34, cat:'transform', name:'orbit',
+    desc:'Satellite dot revolves around a center on a dashed ring. Planetary and precise.',
+    defaults:{ color:'#22C55E', duration:2, size:52, radius:50, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;width:${c.size}px;height:${c.size}px;display:flex;align-items:center;justify-content:center;opacity:${c.opacity}`;
+      const ring=document.createElement('div');
+      ring.style.cssText=`position:absolute;width:${c.size}px;height:${c.size}px;border:1px dashed rgba(${r},${g},${b},.35);border-radius:50%`;
+      const cs=Math.round(c.size*.22);
+      const center=document.createElement('div');
+      center.style.cssText=`width:${cs}px;height:${cs}px;border-radius:50%;background:${c.color};box-shadow:0 0 10px rgba(${r},${g},${b},.6)`;
+      const armR=Math.round(c.size*.42);
+      const arm=document.createElement('div');
+      arm.style.cssText=`position:absolute;width:${armR}px;height:2px;top:50%;left:50%;margin-top:-1px;transform-origin:left center;animation:anim-orbit-arm ${c.duration}s linear infinite`;
+      const ss=Math.round(c.size*.12);
+      const sat=document.createElement('div');
+      sat.style.cssText=`position:absolute;right:-${Math.round(ss/2)}px;top:50%;transform:translateY(-50%);width:${ss}px;height:${ss}px;border-radius:50%;background:${c.color};box-shadow:0 0 8px rgba(${r},${g},${b},.8)`;
+      arm.appendChild(sat);
+      wrap.appendChild(ring); wrap.appendChild(center); wrap.appendChild(arm);
+      return wrap;
+    },
+    html:()=>`<div class="orbit-system">\n  <div class="orbit-ring"></div>\n  <div class="orbit-center"></div>\n  <div class="orbit-arm">\n    <div class="orbit-sat"></div>\n  </div>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); const armR=Math.round(c.size*.42),ss=Math.round(c.size*.12),cs=Math.round(c.size*.22); return `.orbit-system {\n  position: relative;\n  width: ${c.size}px; height: ${c.size}px;\n  display: flex; align-items: center; justify-content: center;\n  opacity: ${c.opacity};\n}\n\n.orbit-ring {\n  position: absolute; inset: 0;\n  border: 1px dashed rgba(${r},${g},${b},.35);\n  border-radius: 50%;\n}\n\n.orbit-center {\n  width: ${cs}px; height: ${cs}px;\n  border-radius: 50%;\n  background: ${c.color};\n  box-shadow: 0 0 10px rgba(${r},${g},${b},.6);\n}\n\n.orbit-arm {\n  position: absolute;\n  width: ${armR}px; height: 2px;\n  top: 50%; left: 50%; margin-top: -1px;\n  transform-origin: left center;\n  animation: orbit ${c.duration}s linear infinite;\n}\n\n.orbit-sat {\n  position: absolute;\n  right: -${Math.round(ss/2)}px; top: 50%;\n  transform: translateY(-50%);\n  width: ${ss}px; height: ${ss}px;\n  border-radius: 50%;\n  background: ${c.color};\n  box-shadow: 0 0 8px rgba(${r},${g},${b},.8);\n}\n\n@keyframes orbit {\n  from { transform: rotate(0deg); }\n  to   { transform: rotate(360deg); }\n}`; }
+  },
+  {
+    id:35, cat:'transform', name:'spring pop',
+    desc:'Elastic scale entrance with a slight rotation. Natural and bouncy.',
+    defaults:{ color:'#22C55E', duration:0.6, size:36, radius:8, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const d=document.createElement('div');
+      Object.assign(d.style,{ width:c.size+'px', height:c.size+'px', borderRadius:c.radius+'px', background:`rgba(${r},${g},${b},.15)`, border:`1px solid rgba(${r},${g},${b},.4)`, opacity:c.opacity, animation:`anim-spring ${c.duration}s ease infinite alternate`, animationDirection:'alternate' });
+      return d;
+    },
+    html:()=>`<div class="spring-box"></div>`,
+    css:(c)=>`.spring-box {\n  width: ${c.size}px;\n  height: ${c.size}px;\n  border-radius: ${c.radius}px;\n  opacity: ${c.opacity};\n  animation: spring-pop ${c.duration}s ease forwards;\n}\n\n@keyframes spring-pop {\n  0%   { transform: scale(0) rotate(-10deg); }\n  60%  { transform: scale(1.1) rotate(3deg); }\n  80%  { transform: scale(.95) rotate(-1deg); }\n  100% { transform: scale(1) rotate(0deg); }\n}`
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // INTERACTIVE — Click-triggered button effects (ids 36-44)
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    id:36, cat:'interactive', name:'airplane button',
+    desc:'Click send: text becomes ✈ and flies off right, then resets automatically.',
+    defaults:{ color:'#22C55E', duration:0.55, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const btn=document.createElement('button');
+      btn.textContent='send'; let busy=false;
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 22px', border:`1px solid rgba(${r},${g},${b},.5)`, borderRadius:c.radius+'px', background:`rgba(${r},${g},${b},.08)`, cursor:'pointer', fontFamily:'var(--font)', opacity:c.opacity, transition:`transform ${c.duration}s ease,opacity ${c.duration}s ease` });
+      btn.onclick=()=>{
+        if(busy)return; busy=true;
+        btn.textContent='✈';
+        setTimeout(()=>{ btn.style.transform='translateX(90px) scale(.4)'; btn.style.opacity='0'; },80);
+        setTimeout(()=>{ btn.style.transition='none'; btn.style.transform=''; btn.style.opacity='1'; btn.textContent='send'; setTimeout(()=>{ btn.style.transition=`transform ${c.duration}s ease,opacity ${c.duration}s ease`; busy=false; },40); },c.duration*1000+500);
+      };
+      return btn;
+    },
+    html:()=>`<button class="fly-btn" onclick="flyBtn(this)">send</button>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.fly-btn {\n  font-size: ${c.size}px; color: ${c.color};\n  padding: 9px 22px;\n  border: 1px solid rgba(${r},${g},${b},.5);\n  border-radius: ${c.radius}px;\n  background: rgba(${r},${g},${b},.08);\n  cursor: pointer; opacity: ${c.opacity};\n  transition: transform ${c.duration}s ease, opacity ${c.duration}s ease;\n}\n.fly-btn.flying { transform: translateX(90px) scale(.4); opacity: 0; }`; }
+  },
+  {
+    id:37, cat:'interactive', name:'bullet shot',
+    desc:'Click fires a bullet projectile that shoots right from the button. DOM-only, no canvas.',
+    defaults:{ color:'#22C55E', duration:0.45, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText='position:relative;display:inline-block;overflow:visible';
+      const btn=document.createElement('button');
+      btn.textContent='fire ●';
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 20px', border:`1px solid rgba(${r},${g},${b},.5)`, borderRadius:c.radius+'px', background:`rgba(${r},${g},${b},.08)`, cursor:'pointer', fontFamily:'var(--font)', opacity:c.opacity });
+      btn.onclick=()=>{
+        const bul=document.createElement('div');
+        bul.style.cssText=`position:absolute;top:50%;right:-2px;width:8px;height:4px;border-radius:3px;background:${c.color};box-shadow:0 0 8px rgba(${r},${g},${b},.9);transform:translateY(-50%);pointer-events:none;transition:transform ${c.duration}s ease,opacity ${c.duration*.5}s ${c.duration*.5}s ease`;
+        wrap.appendChild(bul);
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          bul.style.transform='translateY(-50%) translateX(110px) scaleX(3)';
+          bul.style.opacity='0';
+        }));
+        setTimeout(()=>bul.remove(),(c.duration+0.4)*1000);
+      };
+      wrap.appendChild(btn); return wrap;
+    },
+    html:()=>`<div class="bullet-wrap">\n  <button class="bullet-btn" onclick="fireBullet(this)">fire ●</button>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.bullet-wrap { position:relative; display:inline-block; }\n.bullet-btn {\n  font-size:${c.size}px; color:${c.color};\n  padding:9px 20px; border:1px solid rgba(${r},${g},${b},.5);\n  border-radius:${c.radius}px; background:rgba(${r},${g},${b},.08); cursor:pointer; opacity:${c.opacity};\n}\n.bullet {\n  position:absolute; top:50%; right:-2px;\n  width:8px; height:4px; border-radius:3px;\n  background:${c.color}; box-shadow:0 0 8px rgba(${r},${g},${b},.9);\n  transform:translateY(-50%);\n  transition:transform ${c.duration}s ease, opacity ${+(c.duration*.5).toFixed(2)}s ${+(c.duration*.5).toFixed(2)}s ease;\n}\n.bullet.fired { transform:translateY(-50%) translateX(110px) scaleX(3); opacity:0; }`; }
+  },
+  {
+    id:38, cat:'interactive', name:'freeze button',
+    desc:'Click to freeze: icy glow, letter-spacing crystallises, then thaws back to normal.',
+    defaults:{ color:'#7DF9FF', duration:0.35, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      let busy=false;
+      const btn=document.createElement('button');
+      btn.textContent='❄ freeze';
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 22px', border:`1px solid rgba(${r},${g},${b},.4)`, borderRadius:c.radius+'px', background:'transparent', cursor:'pointer', fontFamily:'var(--font)', opacity:c.opacity, transition:`all ${c.duration}s ease` });
+      btn.onclick=()=>{
+        if(busy)return; busy=true;
+        btn.style.background=`rgba(${r},${g},${b},.18)`;
+        btn.style.borderColor=c.color;
+        btn.style.boxShadow=`0 0 18px rgba(${r},${g},${b},.7),inset 0 0 14px rgba(${r},${g},${b},.18)`;
+        btn.style.letterSpacing='4px'; btn.textContent='❄❄❄';
+        setTimeout(()=>{ btn.style.background='transparent'; btn.style.boxShadow=''; btn.style.borderColor=`rgba(${r},${g},${b},.4)`; btn.style.letterSpacing=''; btn.textContent='❄ freeze'; busy=false; },1800);
+      };
+      return btn;
+    },
+    html:()=>`<button class="freeze-btn" onclick="this.classList.toggle('frozen')">\u2744 freeze</button>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.freeze-btn {\n  font-size:${c.size}px; color:${c.color};\n  padding:9px 22px; border:1px solid rgba(${r},${g},${b},.4);\n  border-radius:${c.radius}px; background:transparent;\n  cursor:pointer; opacity:${c.opacity};\n  transition:all ${c.duration}s ease;\n}\n.freeze-btn.frozen {\n  background:rgba(${r},${g},${b},.18); border-color:${c.color};\n  box-shadow:0 0 18px rgba(${r},${g},${b},.7),inset 0 0 14px rgba(${r},${g},${b},.18);\n  letter-spacing:4px;\n}`; }
+  },
+  {
+    id:39, cat:'interactive', name:'electric shock',
+    desc:'Click for rapid RGB jitter and a violent electric-yellow glow. Great for danger actions.',
+    defaults:{ color:'#facc15', duration:0.06, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      let busy=false;
+      const btn=document.createElement('button');
+      btn.textContent='⚡ shock';
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 22px', border:`1px solid rgba(${r},${g},${b},.5)`, borderRadius:c.radius+'px', background:`rgba(${r},${g},${b},.07)`, cursor:'pointer', fontFamily:'var(--font)', opacity:c.opacity });
+      btn.onclick=()=>{
+        if(busy)return; busy=true;
+        btn.style.animation=`anim-electric-jitter ${c.duration}s linear 6`;
+        btn.style.boxShadow=`0 0 22px rgba(${r},${g},${b},.9),0 0 44px rgba(${r},${g},${b},.4)`;
+        btn.style.borderColor=c.color;
+        setTimeout(()=>{ btn.style.animation=''; btn.style.boxShadow=''; btn.style.borderColor=`rgba(${r},${g},${b},.5)`; busy=false; },c.duration*1000*6+100);
+      };
+      return btn;
+    },
+    html:()=>`<button class="shock-btn" onclick="this.classList.add('zapping');setTimeout(()=>this.classList.remove('zapping'),500)">\u26A1 shock</button>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.shock-btn {\n  font-size:${c.size}px; color:${c.color};\n  padding:9px 22px; border:1px solid rgba(${r},${g},${b},.5);\n  border-radius:${c.radius}px; background:rgba(${r},${g},${b},.07); cursor:pointer; opacity:${c.opacity};\n}\n.shock-btn.zapping {\n  animation:electric-jitter ${c.duration}s linear 6;\n  box-shadow:0 0 22px rgba(${r},${g},${b},.9),0 0 44px rgba(${r},${g},${b},.4);\n}\n@keyframes electric-jitter {\n  0%,100%{transform:translate(0)}\n  10%,30%,50%,70%,90%{transform:translate(-3px,1px) skewX(-2deg)}\n  20%,40%,60%,80%{transform:translate(3px,-1px) skewX(2deg)}\n}`; }
+  },
+  {
+    id:40, cat:'interactive', name:'progress button',
+    desc:'Click to load: fills with a progress bar, shows Done ✓, then resets. No library needed.',
+    defaults:{ color:'#22C55E', duration:1.8, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      let busy=false;
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;display:inline-block;border-radius:${c.radius}px;overflow:hidden;opacity:${c.opacity}`;
+      const bar=document.createElement('div');
+      bar.style.cssText=`position:absolute;inset:0;width:0;background:rgba(${r},${g},${b},.22);transition:width ${c.duration}s cubic-bezier(.4,0,.2,1);pointer-events:none`;
+      const btn=document.createElement('button');
+      btn.textContent='submit';
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 24px', border:`1px solid rgba(${r},${g},${b},.4)`, borderRadius:c.radius+'px', background:'transparent', cursor:'pointer', fontFamily:'var(--font)', position:'relative', zIndex:'1', transition:'color .25s' });
+      btn.onclick=()=>{
+        if(busy)return; busy=true;
+        btn.textContent='loading…'; btn.style.cursor='default';
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{ bar.style.width='100%'; }));
+        setTimeout(()=>{ btn.textContent='✓ done'; btn.style.color='#E8F5EA'; },c.duration*1000-80);
+        setTimeout(()=>{ bar.style.transition='none'; bar.style.width='0'; btn.textContent='submit'; btn.style.color=c.color; btn.style.cursor='pointer'; setTimeout(()=>{ bar.style.transition=`width ${c.duration}s cubic-bezier(.4,0,.2,1)`; busy=false; },50); },c.duration*1000+1600);
+      };
+      wrap.appendChild(bar); wrap.appendChild(btn); return wrap;
+    },
+    html:()=>`<div class="prog-wrap">\n  <div class="prog-bar" id="pBar"></div>\n  <button class="prog-btn" onclick="submitBtn(this)">submit</button>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.prog-wrap { position:relative; display:inline-block; border-radius:${c.radius}px; overflow:hidden; }\n.prog-bar { position:absolute; inset:0; width:0; background:rgba(${r},${g},${b},.22); pointer-events:none; transition:width ${c.duration}s cubic-bezier(.4,0,.2,1); }\n.prog-btn { position:relative; z-index:1; font-size:${c.size}px; color:${c.color}; padding:9px 24px; border:1px solid rgba(${r},${g},${b},.4); border-radius:${c.radius}px; background:transparent; cursor:pointer; opacity:${c.opacity}; transition:color .25s; }`; }
+  },
+  {
+    id:41, cat:'interactive', name:'confetti burst',
+    desc:'Click to celebrate — 22 coloured particles burst radially and fall with gravity.',
+    defaults:{ color:'#22C55E', duration:0.65, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText='position:relative;display:inline-block;overflow:visible';
+      const btn=document.createElement('button');
+      btn.textContent='🎉 celebrate';
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 22px', border:`1px solid rgba(${r},${g},${b},.4)`, borderRadius:c.radius+'px', background:`rgba(${r},${g},${b},.08)`, cursor:'pointer', fontFamily:'var(--font)', opacity:c.opacity });
+      const COLORS=['#22C55E','#facc15','#f43f5e','#818cf8','#38bdf8','#fb923c'];
+      btn.onclick=()=>{
+        for(let i=0;i<22;i++){
+          const p=document.createElement('div');
+          const ang=Math.random()*Math.PI*2, spd=40+Math.random()*65, sz=3+Math.random()*5;
+          p.style.cssText=`position:absolute;top:50%;left:50%;width:${sz}px;height:${sz}px;border-radius:${Math.random()>.5?'50%':'2px'};background:${COLORS[Math.floor(Math.random()*COLORS.length)]};pointer-events:none;transition:transform ${c.duration+Math.random()*.4}s cubic-bezier(.25,.46,.45,.94),opacity ${c.duration*.55}s ${c.duration*.45}s ease`;
+          wrap.appendChild(p);
+          const tx=Math.cos(ang)*spd, ty=Math.sin(ang)*spd-25;
+          requestAnimationFrame(()=>requestAnimationFrame(()=>{ p.style.transform=`translate(${tx}px,${ty+55}px) rotate(${Math.random()*360}deg)`; p.style.opacity='0'; }));
+          setTimeout(()=>p.remove(),(c.duration+.6)*1000);
+        }
+      };
+      wrap.appendChild(btn); return wrap;
+    },
+    html:()=>`<div class="confetti-wrap">\n  <button onclick="burstConfetti(this)">\uD83C\uDF89 celebrate</button>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.confetti-wrap { position:relative; display:inline-block; overflow:visible; }\n.confetti-wrap button {\n  font-size:${c.size}px; color:${c.color}; padding:9px 22px;\n  border:1px solid rgba(${r},${g},${b},.4); border-radius:${c.radius}px;\n  background:rgba(${r},${g},${b},.08); cursor:pointer; opacity:${c.opacity};\n}\n/* Particles injected via JS — see HTML tab */`; }
+  },
+  {
+    id:42, cat:'interactive', name:'success morph',
+    desc:'Click: button narrows to a circle, draws a ✓ checkmark, expands back. CSS + JS morph.',
+    defaults:{ color:'#22C55E', duration:0.32, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      let busy=false;
+      const btn=document.createElement('button');
+      btn.textContent='submit';
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 22px', border:`1px solid rgba(${r},${g},${b},.45)`, borderRadius:c.radius+'px', background:'transparent', cursor:'pointer', fontFamily:'var(--font)', opacity:c.opacity, minWidth:'80px', transition:`all ${c.duration}s cubic-bezier(.4,0,.2,1)` });
+      btn.onclick=()=>{
+        if(busy)return; busy=true;
+        const h=btn.offsetHeight;
+        btn.style.width=h+'px'; btn.style.padding='0'; btn.style.borderRadius='50%'; btn.style.background=`rgba(${r},${g},${b},.14)`;
+        setTimeout(()=>{ btn.textContent='✓'; btn.style.fontWeight='700'; },c.duration*1000);
+        setTimeout(()=>{ btn.style.width=''; btn.style.padding='9px 22px'; btn.style.borderRadius=c.radius+'px'; btn.style.background='transparent'; btn.style.fontWeight=''; setTimeout(()=>{ btn.textContent='submit'; busy=false; },c.duration*1000); },1700);
+      };
+      return btn;
+    },
+    html:()=>`<button class="morph-btn" onclick="successMorph(this)">submit</button>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.morph-btn {\n  font-size:${c.size}px; color:${c.color}; padding:9px 22px; min-width:80px;\n  border:1px solid rgba(${r},${g},${b},.45); border-radius:${c.radius}px;\n  background:transparent; cursor:pointer; opacity:${c.opacity};\n  transition:all ${c.duration}s cubic-bezier(.4,0,.2,1);\n}\n.morph-btn.morphed { width:44px; padding:0; border-radius:50%; background:rgba(${r},${g},${b},.14); }`; }
+  },
+  {
+    id:43, cat:'interactive', name:'delete shake',
+    desc:'Violent shake, shrinks to nothing, respawns. Ideal for destructive confirmations.',
+    defaults:{ color:'#f43f5e', duration:0.08, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      let busy=false;
+      const btn=document.createElement('button');
+      btn.textContent='🗑 delete';
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 22px', border:`1px solid rgba(${r},${g},${b},.45)`, borderRadius:c.radius+'px', background:`rgba(${r},${g},${b},.07)`, cursor:'pointer', fontFamily:'var(--font)', opacity:c.opacity, transition:'transform .35s ease,opacity .35s ease' });
+      btn.onclick=()=>{
+        if(busy)return; busy=true;
+        btn.style.animation=`anim-shake ${c.duration}s ease 5`;
+        setTimeout(()=>{ btn.style.animation=''; btn.style.transform='scale(0)'; btn.style.opacity='0';
+          setTimeout(()=>{ btn.style.transition='none'; btn.style.transform=''; btn.style.opacity='1'; setTimeout(()=>{ btn.style.transition='transform .35s ease,opacity .35s ease'; busy=false; },50); },550);
+        },c.duration*1000*5);
+      };
+      return btn;
+    },
+    html:()=>`<button class="del-btn" onclick="deleteBtn(this)">\uD83D\uDDD1 delete</button>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.del-btn {\n  font-size:${c.size}px; color:${c.color}; padding:9px 22px;\n  border:1px solid rgba(${r},${g},${b},.45); border-radius:${c.radius}px;\n  background:rgba(${r},${g},${b},.07); cursor:pointer; opacity:${c.opacity};\n  transition:transform .35s ease, opacity .35s ease;\n}\n.del-btn.deleting { animation:del-shake ${c.duration}s ease 5; }\n.del-btn.deleted  { transform:scale(0); opacity:0; }\n@keyframes del-shake {\n  0%,100%{transform:translateX(0)}\n  15%,45%,75%{transform:translateX(-6px) rotate(-1deg)}\n  30%,60%,90%{transform:translateX(6px) rotate(1deg)}\n}`; }
+  },
+  {
+    id:44, cat:'interactive', name:'ripple click',
+    desc:'Material Design ripple: a ring expands from the exact click point. Silky smooth.',
+    defaults:{ color:'#22C55E', duration:0.5, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;overflow:hidden;display:inline-block;border-radius:${c.radius}px;opacity:${c.opacity}`;
+      const btn=document.createElement('button');
+      btn.textContent='click me';
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 22px', border:`1px solid rgba(${r},${g},${b},.4)`, borderRadius:c.radius+'px', background:'transparent', cursor:'pointer', fontFamily:'var(--font)', position:'relative', zIndex:'1', pointerEvents:'none' });
+      wrap.onclick=(e)=>{
+        const rect=wrap.getBoundingClientRect(), x=e.clientX-rect.left, y=e.clientY-rect.top;
+        const rip=document.createElement('div');
+        const sz=Math.max(rect.width,rect.height)*2.2;
+        rip.style.cssText=`position:absolute;border-radius:50%;background:rgba(${r},${g},${b},.28);width:${sz}px;height:${sz}px;top:${y-sz/2}px;left:${x-sz/2}px;transform:scale(0);animation:anim-ring-out ${c.duration}s ease-out forwards;pointer-events:none`;
+        wrap.appendChild(rip);
+        setTimeout(()=>rip.remove(),c.duration*1000+100);
+      };
+      wrap.appendChild(btn); return wrap;
+    },
+    html:()=>`<div class="ripple-wrap" onclick="createRipple(event, this)">\n  <button class="ripple-btn">click me</button>\n</div>\n<script>\nfunction createRipple(e,wrap){\n  const r=wrap.getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;\n  const d=document.createElement('div'); d.className='ripple';\n  const s=Math.max(r.width,r.height)*2.2;\n  Object.assign(d.style,{width:s+'px',height:s+'px',top:(y-s/2)+'px',left:(x-s/2)+'px'});\n  wrap.appendChild(d); setTimeout(()=>d.remove(),600);\n}\n<\/script>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.ripple-wrap { position:relative; overflow:hidden; display:inline-block; border-radius:${c.radius}px; opacity:${c.opacity}; cursor:pointer; }\n.ripple-btn { font-size:${c.size}px; color:${c.color}; padding:9px 22px; border:1px solid rgba(${r},${g},${b},.4); border-radius:${c.radius}px; background:transparent; cursor:pointer; position:relative; z-index:1; pointer-events:none; }\n.ripple { position:absolute; border-radius:50%; background:rgba(${r},${g},${b},.28); transform:scale(0); animation:ripple-out ${c.duration}s ease-out forwards; pointer-events:none; }\n@keyframes ripple-out { to { transform:scale(1); opacity:0; } }`; }
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // CURSOR — Mouse-reactive effects (ids 45-47)
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    id:45, cat:'cursor', name:'spotlight',
+    desc:'Dark veil with a radial hole that follows the cursor, revealing hidden content beneath.',
+    defaults:{ color:'#22C55E', duration:0, size:65, radius:8, opacity:0.88 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;width:160px;height:120px;border-radius:${c.radius}px;overflow:hidden;border:1px solid rgba(${r},${g},${b},.2);background:#080E09;cursor:crosshair`;
+      const content=document.createElement('div');
+      content.style.cssText='position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px';
+      content.innerHTML=`<div style="font-size:10px;font-weight:500;color:#E8F5EA;letter-spacing:2px;font-family:var(--font)">HIDDEN</div><div style="font-size:8px;color:#5a7a62;font-family:var(--font)">move cursor</div>`;
+      const veil=document.createElement('div');
+      veil.style.cssText=`position:absolute;inset:0;pointer-events:none;background:rgba(8,14,9,${c.opacity})`;
+      wrap.appendChild(content); wrap.appendChild(veil);
+      wrap.onmousemove=(e)=>{
+        const rect=wrap.getBoundingClientRect();
+        veil.style.background=`radial-gradient(circle ${c.size}px at ${e.clientX-rect.left}px ${e.clientY-rect.top}px,transparent 0%,rgba(8,14,9,${c.opacity}) 100%)`;
+      };
+      wrap.onmouseleave=()=>{ veil.style.background=`rgba(8,14,9,${c.opacity})`; };
+      return wrap;
+    },
+    html:()=>`<div class="sl-wrap" id="sl">\n  <div class="sl-content">Hidden content</div>\n  <div class="sl-veil" id="slVeil"></div>\n</div>\n<script>\n  var sl=document.getElementById('sl');\n  sl.addEventListener('mousemove',function(e){\n    var r=sl.getBoundingClientRect();\n    document.getElementById('slVeil').style.background=\n      'radial-gradient(circle 80px at '+(e.clientX-r.left)+'px '+(e.clientY-r.top)+'px,transparent 0%,rgba(8,14,9,.9) 100%)';\n  });\n<\/script>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.sl-wrap { position:relative; width:400px; height:260px; border-radius:${c.radius}px; overflow:hidden; background:#080E09; cursor:crosshair; }\n.sl-content { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }\n.sl-veil { position:absolute; inset:0; background:rgba(8,14,9,${c.opacity}); pointer-events:none; transition:background .04s linear; }`; }
+  },
+  {
+    id:46, cat:'cursor', name:'magnetic button',
+    desc:'Button drifts toward the cursor inside its zone. Springs back with cubic-bezier on leave.',
+    defaults:{ color:'#22C55E', duration:0.28, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText='display:flex;align-items:center;justify-content:center;width:140px;height:90px';
+      const btn=document.createElement('button');
+      btn.textContent='magnetic';
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 20px', border:`1px solid rgba(${r},${g},${b},.5)`, borderRadius:c.radius+'px', background:`rgba(${r},${g},${b},.07)`, cursor:'pointer', fontFamily:'var(--font)', opacity:c.opacity, transition:`transform ${c.duration}s cubic-bezier(.23,1,.32,1)` });
+      wrap.onmousemove=(e)=>{
+        const rect=btn.getBoundingClientRect();
+        btn.style.transform=`translate(${(e.clientX-(rect.left+rect.width/2))*.38}px,${(e.clientY-(rect.top+rect.height/2))*.38}px)`;
+      };
+      wrap.onmouseleave=()=>{ btn.style.transform=''; };
+      wrap.appendChild(btn); return wrap;
+    },
+    html:()=>`<div class="mag-zone" id="mz">\n  <button class="mag-btn" id="mb">magnetic</button>\n</div>\n<script>\n  var z=document.getElementById('mz'),b=document.getElementById('mb');\n  z.addEventListener('mousemove',function(e){\n    var r=b.getBoundingClientRect();\n    b.style.transform='translate('+(e.clientX-(r.left+r.width/2))*.38+'px,'+(e.clientY-(r.top+r.height/2))*.38+'px)';\n  });\n  z.addEventListener('mouseleave',function(){b.style.transform='';});\n<\/script>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.mag-zone { display:flex; align-items:center; justify-content:center; width:200px; height:120px; }\n.mag-btn { font-size:${c.size}px; color:${c.color}; padding:9px 20px; border:1px solid rgba(${r},${g},${b},.5); border-radius:${c.radius}px; background:rgba(${r},${g},${b},.07); cursor:pointer; opacity:${c.opacity}; transition:transform ${c.duration}s cubic-bezier(.23,1,.32,1); }`; }
+  },
+  {
+    id:47, cat:'cursor', name:'cursor glow',
+    desc:'Soft radial orb chases the cursor with lag. Like a light source living inside the element.',
+    defaults:{ color:'#22C55E', duration:0.1, size:50, radius:8, opacity:0.7 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;width:160px;height:120px;border-radius:${c.radius}px;overflow:hidden;border:1px solid rgba(${r},${g},${b},.15);background:#080E09;cursor:crosshair`;
+      const orb=document.createElement('div');
+      orb.style.cssText=`position:absolute;width:${c.size*2}px;height:${c.size*2}px;border-radius:50%;background:radial-gradient(circle,rgba(${r},${g},${b},${c.opacity}) 0%,transparent 70%);pointer-events:none;transform:translate(-50%,-50%);top:50%;left:50%;transition:left ${c.duration}s ease,top ${c.duration}s ease`;
+      const label=document.createElement('div');
+      label.style.cssText=`position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:rgba(${r},${g},${b},.35);font-family:var(--font);letter-spacing:1px;pointer-events:none`;
+      label.textContent='move cursor';
+      wrap.appendChild(orb); wrap.appendChild(label);
+      wrap.onmousemove=(e)=>{
+        const rect=wrap.getBoundingClientRect();
+        orb.style.left=(e.clientX-rect.left)+'px'; orb.style.top=(e.clientY-rect.top)+'px';
+        label.style.opacity='0';
+      };
+      wrap.onmouseleave=()=>{ label.style.opacity='1'; };
+      return wrap;
+    },
+    html:()=>`<div class="cg-wrap" id="cg">\n  <div class="cg-orb" id="cgOrb"></div>\n  <div class="cg-content">your content</div>\n</div>\n<script>\n  var w=document.getElementById('cg'),o=document.getElementById('cgOrb');\n  w.addEventListener('mousemove',function(e){var r=w.getBoundingClientRect();o.style.left=(e.clientX-r.left)+'px';o.style.top=(e.clientY-r.top)+'px';});\n<\/script>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.cg-wrap { position:relative; width:400px; height:280px; border-radius:${c.radius}px; overflow:hidden; background:#080E09; cursor:crosshair; }\n.cg-orb { position:absolute; width:${c.size*2}px; height:${c.size*2}px; border-radius:50%; background:radial-gradient(circle,rgba(${r},${g},${b},${c.opacity}) 0%,transparent 70%); pointer-events:none; transform:translate(-50%,-50%); transition:left ${c.duration}s ease,top ${c.duration}s ease; }\n.cg-content { position:relative; z-index:1; }`; }
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // KEYFRAME — Attention seekers (ids 48-52)
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    id:48, cat:'keyframe', name:'heartbeat',
+    desc:'Double-bump pulse mimics a real heartbeat. Perfect for like buttons and health UIs.',
+    defaults:{ color:'#f43f5e', duration:1.2, size:28, radius:50, opacity:1 },
+    buildPreview(c) {
+      const d=document.createElement('div');
+      d.textContent='♥';
+      Object.assign(d.style,{ fontSize:c.size+'px', color:c.color, opacity:c.opacity, lineHeight:'1', display:'block', animation:`anim-heartbeat ${c.duration}s ease-in-out infinite` });
+      return d;
+    },
+    html:()=>`<span class="heartbeat">\u2665</span>`,
+    css:(c)=>`.heartbeat {\n  font-size:${c.size}px; color:${c.color}; opacity:${c.opacity};\n  display:inline-block;\n  animation:heartbeat ${c.duration}s ease-in-out infinite;\n}\n@keyframes heartbeat {\n  0%,100%{transform:scale(1)}\n  14%{transform:scale(1.18)}\n  28%{transform:scale(1)}\n  42%{transform:scale(1.12)}\n  70%{transform:scale(1)}\n}`
+  },
+  {
+    id:49, cat:'keyframe', name:'tada',
+    desc:'Attention seeker — wobbles with scale and rotation. Drop on badges or notifications.',
+    defaults:{ color:'#22C55E', duration:0.9, size:28, radius:8, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const d=document.createElement('div');
+      d.style.cssText=`width:${c.size}px;height:${c.size}px;border-radius:${c.radius}px;background:rgba(${r},${g},${b},.18);border:2px solid ${c.color};color:${c.color};opacity:${c.opacity};display:flex;align-items:center;justify-content:center;font-size:${Math.round(c.size*.5)}px;animation:anim-tada ${c.duration}s ease infinite;font-family:var(--font)`;
+      d.textContent='!';
+      return d;
+    },
+    html:()=>`<div class="tada-badge">!</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.tada-badge {\n  width:${c.size}px; height:${c.size}px;\n  border-radius:${c.radius}px;\n  background:rgba(${r},${g},${b},.18); border:2px solid ${c.color}; color:${c.color};\n  opacity:${c.opacity}; display:flex; align-items:center; justify-content:center;\n  animation:tada ${c.duration}s ease infinite;\n}\n@keyframes tada {\n  0%,100%{transform:scale(1) rotate(0)}\n  10%,20%{transform:scale(.95) rotate(-3deg)}\n  30%,50%,70%,90%{transform:scale(1.06) rotate(3deg)}\n  40%,60%,80%{transform:scale(1.06) rotate(-3deg)}\n}`; }
+  },
+  {
+    id:50, cat:'keyframe', name:'jelly',
+    desc:'Squash & stretch on both axes. Organic, bouncy — great for loading blobs.',
+    defaults:{ color:'#22C55E', duration:0.8, size:30, radius:50, opacity:1 },
+    buildPreview(c) {
+      const d=document.createElement('div');
+      Object.assign(d.style,{ width:c.size+'px', height:c.size+'px', borderRadius:c.radius+'%', background:c.color, opacity:c.opacity, animation:`anim-jelly ${c.duration}s ease-in-out infinite` });
+      return d;
+    },
+    html:()=>`<div class="jelly-blob"></div>`,
+    css:(c)=>`.jelly-blob { width:${c.size}px; height:${c.size}px; border-radius:${c.radius}%; background:${c.color}; opacity:${c.opacity}; animation:jelly ${c.duration}s ease-in-out infinite; }\n@keyframes jelly {\n  0%,100%{transform:scaleX(1) scaleY(1)}\n  25%{transform:scaleX(.93) scaleY(1.07)}\n  50%{transform:scaleX(1.07) scaleY(.93)}\n  75%{transform:scaleX(.97) scaleY(1.03)}\n}`
+  },
+  {
+    id:51, cat:'keyframe', name:'rubber band',
+    desc:'Horizontal over-stretch snaps back. Classic follow-through animation principle.',
+    defaults:{ color:'#22C55E', duration:0.9, size:28, radius:8, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const d=document.createElement('div');
+      d.style.cssText=`width:${c.size}px;height:${c.size}px;border-radius:${c.radius}px;background:rgba(${r},${g},${b},.15);border:2px solid ${c.color};opacity:${c.opacity};animation:anim-rubber ${c.duration}s ease infinite`;
+      return d;
+    },
+    html:()=>`<div class="rubber-box"></div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.rubber-box { width:${c.size}px; height:${c.size}px; border-radius:${c.radius}px; background:rgba(${r},${g},${b},.15); border:2px solid ${c.color}; opacity:${c.opacity}; animation:rubber-band ${c.duration}s ease infinite; }\n@keyframes rubber-band {\n  0%,100%{transform:scaleX(1)}\n  30%{transform:scaleX(1.25)}\n  50%{transform:scaleX(.75)}\n  65%{transform:scaleX(1.15)}\n  80%{transform:scaleX(.95)}\n}`; }
+  },
+  {
+    id:52, cat:'keyframe', name:'spiral entrance',
+    desc:'Spirals in from zero scale with a 720° rotation. Dramatic, theatrical entrance.',
+    defaults:{ color:'#22C55E', duration:0.85, size:30, radius:8, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const d=document.createElement('div');
+      d.style.cssText=`width:${c.size}px;height:${c.size}px;border-radius:${c.radius}px;background:rgba(${r},${g},${b},.18);border:2px solid ${c.color};opacity:${c.opacity};animation:anim-spiral ${c.duration}s cubic-bezier(.17,.67,.35,1.2) infinite alternate`;
+      return d;
+    },
+    html:()=>`<div class="spiral-in"></div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.spiral-in { width:${c.size}px; height:${c.size}px; border-radius:${c.radius}px; background:rgba(${r},${g},${b},.18); border:2px solid ${c.color}; opacity:${c.opacity}; animation:spiral-entrance ${c.duration}s cubic-bezier(.17,.67,.35,1.2) infinite alternate; }\n@keyframes spiral-entrance {\n  from { transform:rotate(-720deg) scale(0); opacity:0; }\n  to   { transform:rotate(0deg) scale(1); opacity:1; }\n}`; }
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // TEXT — additional effects (ids 53-54)
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    id:53, cat:'text', name:'wave letters',
+    desc:'Each letter rises in a staggered wave — purely CSS animation-delay per character.',
+    defaults:{ color:'#22C55E', duration:1, size:18, radius:0, opacity:1 },
+    buildPreview(c) {
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`display:flex;gap:1px;font-family:var(--font);font-size:${c.size}px;font-weight:500;opacity:${c.opacity}`;
+      'cssreel'.split('').forEach((ch,i)=>{
+        const s=document.createElement('span');
+        s.textContent=ch;
+        s.style.cssText=`color:${c.color};display:inline-block;animation:anim-bounce ${c.duration}s ease-in-out ${(i*.1).toFixed(1)}s infinite`;
+        wrap.appendChild(s);
+      });
+      return wrap;
+    },
+    html:()=>`<div class="wave-text">\n  <span>c</span><span>s</span><span>s</span><span>r</span><span>e</span><span>e</span><span>l</span>\n</div>`,
+    css:(c)=>`.wave-text { display:flex; gap:1px; font-size:${c.size}px; font-weight:500; opacity:${c.opacity}; }\n.wave-text span { color:${c.color}; display:inline-block; animation:wave-letter ${c.duration}s ease-in-out infinite; }\n.wave-text span:nth-child(1){animation-delay:0s}\n.wave-text span:nth-child(2){animation-delay:.1s}\n.wave-text span:nth-child(3){animation-delay:.2s}\n.wave-text span:nth-child(4){animation-delay:.3s}\n.wave-text span:nth-child(5){animation-delay:.4s}\n.wave-text span:nth-child(6){animation-delay:.5s}\n.wave-text span:nth-child(7){animation-delay:.6s}\n@keyframes wave-letter {\n  0%,100%{transform:translateY(0)}\n  50%{transform:translateY(-${Math.round(c.size*.55)}px)}\n}`
+  },
+  {
+    id:54, cat:'text', name:'gradient scroll',
+    desc:'Animated gradient sweeps through text via background-clip. Vivid, zero JS.',
+    defaults:{ color:'#22C55E', duration:3, size:22, radius:0, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const span=document.createElement('span');
+      span.textContent='gradient';
+      Object.assign(span.style,{ fontSize:c.size+'px', fontWeight:'500', letterSpacing:'1px', fontFamily:'var(--font)', opacity:c.opacity, background:`linear-gradient(90deg,${c.color} 0%,rgba(${r},${g},${b},.35) 30%,#fff 50%,rgba(${r},${g},${b},.35) 70%,${c.color} 100%)`, backgroundSize:'200% auto', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text', animation:`anim-gold-shift ${c.duration}s linear infinite` });
+      return span;
+    },
+    html:()=>`<span class="grad-scroll">gradient</span>`,
+    css:(c)=>`.grad-scroll {\n  font-size:${c.size}px; font-weight:500; opacity:${c.opacity};\n  background:linear-gradient(90deg,${c.color} 0%,rgba(255,255,255,.35) 50%,${c.color} 100%);\n  background-size:200% auto;\n  background-clip:text; -webkit-background-clip:text;\n  -webkit-text-fill-color:transparent;\n  animation:grad-scroll ${c.duration}s linear infinite;\n}\n@keyframes grad-scroll {\n  from{background-position:200% center}\n  to{background-position:-200% center}\n}`
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // GLITCH — additional (ids 55-56)
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    id:55, cat:'glitch', name:'static noise',
+    desc:'A cloned layer slices across with clip-path inset in random horizontal bands. Pure static.',
+    defaults:{ color:'#E8F5EA', duration:0.18, size:20, radius:0, opacity:1 },
+    buildPreview(c) {
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;font-size:${c.size}px;font-weight:500;letter-spacing:3px;font-family:var(--font);color:${c.color};opacity:${c.opacity}`;
+      const base=document.createElement('div'); base.textContent='STATIC';
+      const noise=document.createElement('div'); noise.textContent='STATIC';
+      noise.style.cssText=`position:absolute;inset:0;color:#ff0040;animation:anim-static-slice ${c.duration}s steps(1) infinite`;
+      wrap.appendChild(base); wrap.appendChild(noise); return wrap;
+    },
+    html:()=>`<div class="static-wrap">\n  <div class="static-base">STATIC</div>\n  <div class="static-noise">STATIC</div>\n</div>`,
+    css:(c)=>`.static-wrap { position:relative; font-size:${c.size}px; font-weight:500; letter-spacing:3px; opacity:${c.opacity}; }\n.static-base { color:${c.color}; }\n.static-noise { position:absolute; inset:0; color:#ff0040; animation:static-noise ${c.duration}s steps(1) infinite; }\n@keyframes static-noise {\n  0%,100%{clip-path:inset(0 0 99% 0)}\n  10%{clip-path:inset(5% 0 75% 0)}\n  20%{clip-path:inset(38% 0 45% 0)}\n  30%{clip-path:inset(62% 0 18% 0)}\n  40%{clip-path:inset(22% 0 58% 0)}\n  50%{clip-path:inset(78% 0 8% 0)}\n  60%{clip-path:inset(12% 0 72% 0)}\n  70%{clip-path:inset(48% 0 32% 0)}\n  80%{clip-path:inset(4% 0 88% 0)}\n  90%{clip-path:inset(92% 0 1% 0)}\n}`
+  },
+  {
+    id:56, cat:'glitch', name:'VHS tracking',
+    desc:'Horizontal tracking line drifts down with RGB aberration. Unmistakable 80s artefact.',
+    defaults:{ color:'#E8F5EA', duration:2.5, size:20, radius:0, opacity:1 },
+    buildPreview(c) {
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;font-size:${c.size}px;font-weight:500;letter-spacing:3px;font-family:var(--font);color:${c.color};opacity:${c.opacity}`;
+      const base=document.createElement('div'); base.textContent='VHS';
+      const track=document.createElement('div'); track.textContent='VHS';
+      track.style.cssText=`position:absolute;inset:0;color:#00f0ff;text-shadow:-2px 0 #ff0040;animation:anim-vhs-track ${c.duration}s linear infinite`;
+      wrap.appendChild(base); wrap.appendChild(track); return wrap;
+    },
+    html:()=>`<div class="vhs-wrap">\n  <div class="vhs-base">VHS</div>\n  <div class="vhs-track">VHS</div>\n</div>`,
+    css:(c)=>`.vhs-wrap { position:relative; font-size:${c.size}px; font-weight:500; letter-spacing:3px; opacity:${c.opacity}; }\n.vhs-base  { color:${c.color}; }\n.vhs-track { position:absolute; inset:0; color:#00f0ff; text-shadow:-2px 0 #ff0040; animation:vhs-tracking ${c.duration}s linear infinite; }\n@keyframes vhs-tracking {\n  0%,100%{clip-path:inset(0 0 98% 0);transform:translateX(0)}\n  25%{clip-path:inset(24% 0 72% 0);transform:translateX(-5px)}\n  50%{clip-path:inset(55% 0 40% 0);transform:translateX(4px)}\n  75%{clip-path:inset(80% 0 14% 0);transform:translateX(-3px)}\n}`
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // HOVER — additional (ids 57-58)
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    id:57, cat:'hover', name:'shutter reveal',
+    desc:'Two panels slide apart on hover revealing the accent colour. Cinema-style wipe.',
+    defaults:{ color:'#22C55E', duration:0.32, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`position:relative;overflow:hidden;display:inline-block;border-radius:${c.radius}px;cursor:pointer;opacity:${c.opacity}`;
+      const bg=document.createElement('div');
+      bg.style.cssText=`position:absolute;inset:0;background:${c.color};z-index:0`;
+      const l=document.createElement('div');
+      l.style.cssText=`position:absolute;inset:0;right:50%;background:#0F1A11;z-index:1;transition:transform ${c.duration}s ease`;
+      const r2=document.createElement('div');
+      r2.style.cssText=`position:absolute;inset:0;left:50%;background:#0F1A11;z-index:1;transition:transform ${c.duration}s ease`;
+      const label=document.createElement('span');
+      label.textContent='hover';
+      label.style.cssText=`position:relative;z-index:2;font-size:${c.size}px;color:${c.color};padding:9px 22px;display:block;font-family:var(--font);font-weight:500;transition:color ${+(c.duration*.5).toFixed(2)}s ease`;
+      wrap.appendChild(bg); wrap.appendChild(l); wrap.appendChild(r2); wrap.appendChild(label);
+      wrap.onmouseenter=()=>{ l.style.transform='translateX(-100%)'; r2.style.transform='translateX(100%)'; label.style.color='#080E09'; };
+      wrap.onmouseleave=()=>{ l.style.transform=''; r2.style.transform=''; label.style.color=c.color; };
+      return wrap;
+    },
+    html:()=>`<div class="shutter">\n  <div class="shutter-bg"></div>\n  <div class="shutter-l"></div>\n  <div class="shutter-r"></div>\n  <span class="shutter-label">hover</span>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.shutter { position:relative; overflow:hidden; display:inline-block; border-radius:${c.radius}px; cursor:pointer; opacity:${c.opacity}; }\n.shutter-bg { position:absolute; inset:0; background:${c.color}; z-index:0; }\n.shutter-l  { position:absolute; inset:0; right:50%; background:#0F1A11; z-index:1; transition:transform ${c.duration}s ease; }\n.shutter-r  { position:absolute; inset:0; left:50%;  background:#0F1A11; z-index:1; transition:transform ${c.duration}s ease; }\n.shutter-label { position:relative; z-index:2; font-size:${c.size}px; color:${c.color}; padding:9px 22px; display:block; transition:color ${+(c.duration*.5).toFixed(2)}s ease; }\n.shutter:hover .shutter-l { transform:translateX(-100%); }\n.shutter:hover .shutter-r { transform:translateX(100%); }\n.shutter:hover .shutter-label { color:#080E09; }`; }
+  },
+  {
+    id:58, cat:'hover', name:'spotlight hover',
+    desc:'A radial highlight tracks the cursor inside the button. Feels three-dimensional.',
+    defaults:{ color:'#22C55E', duration:0, size:13, radius:6, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const btn=document.createElement('button');
+      btn.textContent='hover me';
+      Object.assign(btn.style,{ fontSize:c.size+'px', color:c.color, padding:'9px 22px', border:`1px solid rgba(${r},${g},${b},.4)`, borderRadius:c.radius+'px', background:'transparent', cursor:'pointer', fontFamily:'var(--font)', opacity:c.opacity, position:'relative', overflow:'hidden' });
+      const spot=document.createElement('div');
+      spot.style.cssText=`position:absolute;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,rgba(${r},${g},${b},.25) 0%,transparent 70%);pointer-events:none;transform:translate(-50%,-50%);opacity:0;transition:opacity .15s ease`;
+      btn.appendChild(spot);
+      btn.onmousemove=(e)=>{
+        const rect=btn.getBoundingClientRect();
+        spot.style.left=(e.clientX-rect.left)+'px'; spot.style.top=(e.clientY-rect.top)+'px'; spot.style.opacity='1';
+      };
+      btn.onmouseleave=()=>{ spot.style.opacity='0'; };
+      return btn;
+    },
+    html:()=>`<button class="spot-btn" id="sb">hover me</button>\n<script>\n  var b=document.getElementById('sb'),s=document.createElement('div');\n  s.className='spot-light'; b.appendChild(s);\n  b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();s.style.left=(e.clientX-r.left)+'px';s.style.top=(e.clientY-r.top)+'px';s.style.opacity='1';});\n  b.addEventListener('mouseleave',function(){s.style.opacity='0';});\n<\/script>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.spot-btn { font-size:${c.size}px; color:${c.color}; padding:9px 22px; border:1px solid rgba(${r},${g},${b},.4); border-radius:${c.radius}px; background:transparent; cursor:pointer; opacity:${c.opacity}; position:relative; overflow:hidden; }\n.spot-light { position:absolute; width:70px; height:70px; border-radius:50%; background:radial-gradient(circle,rgba(${r},${g},${b},.25) 0%,transparent 70%); pointer-events:none; transform:translate(-50%,-50%); opacity:0; transition:opacity .15s ease; }`; }
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // TRANSFORM — additional (ids 59-60)
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    id:59, cat:'transform', name:'flip card',
+    desc:'Full 3D flip on hover reveals a back face. Uses rotateY + backface-visibility.',
+    defaults:{ color:'#22C55E', duration:0.55, size:54, radius:10, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const scene=document.createElement('div');
+      scene.style.cssText=`perspective:600px;width:${Math.round(c.size*1.8)}px;height:${c.size}px`;
+      const inner=document.createElement('div');
+      inner.style.cssText=`position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform ${c.duration}s cubic-bezier(.4,0,.2,1)`;
+      const front=document.createElement('div');
+      front.style.cssText=`position:absolute;inset:0;border-radius:${c.radius}px;background:rgba(${r},${g},${b},.1);border:1px solid rgba(${r},${g},${b},.4);display:flex;align-items:center;justify-content:center;font-size:10px;color:${c.color};font-family:var(--font);backface-visibility:hidden;-webkit-backface-visibility:hidden`;
+      front.textContent='front';
+      const back=document.createElement('div');
+      back.style.cssText=`position:absolute;inset:0;border-radius:${c.radius}px;background:rgba(${r},${g},${b},.22);border:1px solid ${c.color};display:flex;align-items:center;justify-content:center;font-size:10px;color:${c.color};font-family:var(--font);backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg)`;
+      back.textContent='back ✓';
+      inner.appendChild(front); inner.appendChild(back); scene.appendChild(inner);
+      scene.onmouseenter=()=>{ inner.style.transform='rotateY(180deg)'; };
+      scene.onmouseleave=()=>{ inner.style.transform=''; };
+      return scene;
+    },
+    html:()=>`<div class="flip-scene">\n  <div class="flip-inner">\n    <div class="flip-front">front</div>\n    <div class="flip-back">back \u2713</div>\n  </div>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.flip-scene { perspective:600px; width:${Math.round(c.size*1.8)}px; height:${c.size}px; }\n.flip-inner { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform ${c.duration}s cubic-bezier(.4,0,.2,1); }\n.flip-scene:hover .flip-inner { transform:rotateY(180deg); }\n.flip-front,.flip-back { position:absolute; inset:0; border-radius:${c.radius}px; display:flex; align-items:center; justify-content:center; backface-visibility:hidden; -webkit-backface-visibility:hidden; font-size:12px; }\n.flip-front { background:rgba(${r},${g},${b},.1); border:1px solid rgba(${r},${g},${b},.4); color:${c.color}; }\n.flip-back  { background:rgba(${r},${g},${b},.22); border:1px solid ${c.color}; color:${c.color}; transform:rotateY(180deg); }`; }
+  },
+  {
+    id:60, cat:'transform', name:'morph shape',
+    desc:'Fluid border-radius loop — circle to squircle to square and back. Mesmerising.',
+    defaults:{ color:'#22C55E', duration:2.5, size:44, radius:0, opacity:1 },
+    buildPreview(c) {
+      const d=document.createElement('div');
+      Object.assign(d.style,{ width:c.size+'px', height:c.size+'px', background:c.color, opacity:c.opacity, animation:`anim-liquid ${c.duration}s ease-in-out infinite` });
+      return d;
+    },
+    html:()=>`<div class="morph-shape"></div>`,
+    css:(c)=>`.morph-shape { width:${c.size}px; height:${c.size}px; background:${c.color}; opacity:${c.opacity}; animation:morph-shape ${c.duration}s ease-in-out infinite; }\n@keyframes morph-shape {\n  0%,100%{border-radius:60% 40% 30% 70% / 60% 30% 70% 40%}\n  33%{border-radius:50%}\n  66%{border-radius:${Math.round(c.size*.08)}px}\n}`
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // LOADER — additional (ids 61-63)
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    id:61, cat:'loader', name:'progress bar',
+    desc:'Classic horizontal fill bar with a shimmer pass. Animates 0→100% and loops.',
+    defaults:{ color:'#22C55E', duration:2, size:8, radius:4, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`width:130px;height:${c.size}px;border-radius:${c.radius}px;background:rgba(${r},${g},${b},.15);overflow:hidden;opacity:${c.opacity};position:relative`;
+      const fill=document.createElement('div');
+      fill.style.cssText=`height:100%;border-radius:${c.radius}px;background:${c.color};width:0;animation:anim-prog-fill ${c.duration}s ease-in-out infinite alternate`;
+      if(!document.getElementById('__pf')){const st=document.createElement('style');st.id='__pf';st.textContent='@keyframes anim-prog-fill{from{width:0}to{width:100%}}';document.head.appendChild(st);}
+      const shine=document.createElement('div');
+      shine.style.cssText=`position:absolute;inset:0;background:linear-gradient(90deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%);background-size:200% 100%;animation:anim-shine ${+(c.duration*.6).toFixed(1)}s ease-in-out infinite`;
+      wrap.appendChild(fill); wrap.appendChild(shine); return wrap;
+    },
+    html:()=>`<div class="pbar-wrap">\n  <div class="pbar-fill"></div>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.pbar-wrap { width:200px; height:${c.size}px; border-radius:${c.radius}px; background:rgba(${r},${g},${b},.15); overflow:hidden; opacity:${c.opacity}; }\n.pbar-fill { height:100%; border-radius:${c.radius}px; background:${c.color}; animation:pbar-fill ${c.duration}s ease-in-out infinite alternate; }\n@keyframes pbar-fill { from{width:0} to{width:100%} }`; }
+  },
+  {
+    id:62, cat:'loader', name:'skeleton card',
+    desc:'Multi-row skeleton placeholder with shimmer sweep. Copy and adapt to any layout.',
+    defaults:{ color:'#3D7A4A', duration:1.5, size:10, radius:4, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const bg=`rgba(${r},${g},${b},.12)`, hi=`rgba(${r},${g},${b},.28)`;
+      const grd=`linear-gradient(90deg,${bg} 25%,${hi} 50%,${bg} 75%)`;
+      const anim=`anim-shimmer ${c.duration}s infinite`;
+      const card=document.createElement('div');
+      card.style.cssText=`width:130px;padding:10px;border-radius:${c.radius+2}px;background:rgba(${r},${g},${b},.06);border:1px solid rgba(${r},${g},${b},.1);opacity:${c.opacity}`;
+      const av=document.createElement('div');
+      av.style.cssText=`width:28px;height:28px;border-radius:50%;background:${grd};background-size:200% 100%;animation:${anim};margin-bottom:8px`;
+      card.appendChild(av);
+      ['70%','90%','55%'].forEach(w=>{ const d=document.createElement('div'); d.style.cssText=`width:${w};height:${c.size}px;border-radius:${c.radius}px;background:${grd};background-size:200% 100%;animation:${anim};margin-bottom:6px`; card.appendChild(d); });
+      return card;
+    },
+    html:()=>`<div class="skel-card">\n  <div class="skel-av"></div>\n  <div class="skel-row" style="width:70%"></div>\n  <div class="skel-row" style="width:90%"></div>\n  <div class="skel-row" style="width:55%"></div>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); const bg=`rgba(${r},${g},${b},.12)`,hi=`rgba(${r},${g},${b},.28)`; return `.skel-card { padding:16px; border-radius:${c.radius+2}px; background:rgba(${r},${g},${b},.06); border:1px solid rgba(${r},${g},${b},.1); opacity:${c.opacity}; }\n.skel-av { width:40px; height:40px; border-radius:50%; background:linear-gradient(90deg,${bg} 25%,${hi} 50%,${bg} 75%); background-size:200% 100%; animation:shimmer ${c.duration}s infinite; margin-bottom:12px; }\n.skel-row { height:${c.size}px; border-radius:${c.radius}px; background:linear-gradient(90deg,${bg} 25%,${hi} 50%,${bg} 75%); background-size:200% 100%; animation:shimmer ${c.duration}s infinite; margin-bottom:8px; }\n@keyframes shimmer { from{background-position:200% 0} to{background-position:-200% 0} }`; }
+  },
+  {
+    id:63, cat:'loader', name:'hourglass',
+    desc:'CSS clip-path hourglass that flips with a rotateX halfway through. Timeless loading icon.',
+    defaults:{ color:'#22C55E', duration:1.4, size:32, radius:2, opacity:1 },
+    buildPreview(c) {
+      const [r,g,b]=hexToRgb(c.color);
+      const wrap=document.createElement('div');
+      wrap.style.cssText=`perspective:200px;width:${c.size}px;height:${c.size}px`;
+      const hg=document.createElement('div');
+      hg.style.cssText=`width:${c.size}px;height:${c.size}px;opacity:${c.opacity};animation:anim-cube ${c.duration}s linear infinite`;
+      const top=document.createElement('div');
+      top.style.cssText=`width:100%;height:50%;background:${c.color};clip-path:polygon(10% 0%,90% 0%,50% 100%)`;
+      const bot=document.createElement('div');
+      bot.style.cssText=`width:100%;height:50%;background:rgba(${r},${g},${b},.4);clip-path:polygon(50% 0%,10% 100%,90% 100%)`;
+      hg.appendChild(top); hg.appendChild(bot); wrap.appendChild(hg); return wrap;
+    },
+    html:()=>`<div style="perspective:200px;width:fit-content">\n  <div class="hourglass">\n    <div class="hg-top"></div>\n    <div class="hg-bot"></div>\n  </div>\n</div>`,
+    css:(c)=>{ const [r,g,b]=hexToRgb(c.color); return `.hourglass { width:${c.size}px; height:${c.size}px; opacity:${c.opacity}; animation:hg-flip ${c.duration}s linear infinite; }\n.hg-top { width:100%; height:50%; background:${c.color}; clip-path:polygon(10% 0%,90% 0%,50% 100%); }\n.hg-bot { width:100%; height:50%; background:rgba(${r},${g},${b},.4); clip-path:polygon(50% 0%,10% 100%,90% 100%); }\n@keyframes hg-flip { 0%,45%{transform:rotateX(0deg)} 55%,100%{transform:rotateX(180deg)} }`; }
+  }
+
+];
+
+/* ── Helpers ── */
+function hexToRgb(hex) {
+  const h = hex.replace('#','');
+  return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+}
+
+/* ── i18n ── */
+const DESC_ES = {
+  1:'Borde giratorio clásico. Funciona en cualquier elemento con border-radius.',
+  2:'Animación de escala y opacidad. Ideal para indicadores de estado.',
+  3:'Barras estilo ecualizador con delays escalonados para un efecto de onda fluida.',
+  4:'Rebote de pelota suave usando cubic-bezier para una sensación natural.',
+  5:'Combina translateY con una rotación sutil para un efecto de flotación orgánico.',
+  6:'Rotación 3D pura en CSS usando rotateX + rotateY con preserve-3d.',
+  7:'El botón se rellena y sube al pasar el cursor. Transición limpia con translateY.',
+  8:'El subrayado entra desde la izquierda con transición de width en ::after.',
+  9:'Transición de borde y sombra al hacer hover. Sutil pero satisfactorio.',
+  10:'Cursor de terminal con ::after y temporizado step-end.',
+  11:'Efecto máquina de escribir usando animación de width y steps(). Sin JS.',
+  12:'Esqueleto de carga con animación de background-position.',
+  13:'Vidrio esmerilado con backdrop-filter: blur. Ponlo sobre un fondo colorido.',
+  14:'El elemento entra por la izquierda. Usa animation-delay para efectos escalonados.',
+  15:'Gradiente metálico con un destello que barre. El color controla el tinte.',
+  16:'Relleno de gradiente dorado animado usando background-clip: text.',
+  17:'Micro-líneas repetidas sobre un gradiente oscuro simulan metal cepillado.',
+  18:'Blob que morphea con gradiente metálico radial. Ajusta el color para plata/oro/cobre.',
+  19:'Text-shadow multicapa crea un brillo de tubo de neón realista con pulso suave.',
+  20:'Efecto de neón roto con caídas de opacidad irregulares. Sin JS, puro keyframe.',
+  21:'Contorno de neón pulsante con brillo interior y exterior via box-shadow currentColor.',
+  22:'Un haz brillante barre de arriba a abajo dentro de un contenedor. Clásico sci-fi.',
+  23:'División de canales de color RGB con desplazamientos aleatorios. Caótico y afilado.',
+  24:'Overlay de líneas horizontales con parpadeo sutil imita un monitor CRT.',
+  25:'Desplazamiento de canal RGB — capas roja y cian se alternan con el tiempo.',
+  26:'Rotación completa en el eje Y al hacer hover. Funciona en cualquier elemento.',
+  27:'El borde se traza desde la izquierda al hacer hover con clip-path. Sin SVG ni JS.',
+  28:'El fondo se llena desde abajo al hacer hover. El color invierte automáticamente.',
+  29:'Inclinación de tarjeta en perspectiva al hacer hover. Profundidad táctil sin JS.',
+  30:'Tres puntos rebotando con delays escalonados. El loader más reconocido universalmente.',
+  31:'Anillos concéntricos se irradian hacia afuera desde un punto central. Para estados de "escaneando".',
+  32:'Oscilación horizontal rápida. Ideal para estados de error o contraseña incorrecta.',
+  33:'Oscila desde su borde superior como un péndulo. Usa transform-origin: top center.',
+  34:'Un punto satélite gira alrededor de un centro sobre un anillo punteado. Planetario.',
+  35:'Entrada de escala elástica con ligera rotación. Natural y con rebote.',
+  36:'Click enviar: el texto se convierte en ✈ y sale volando hacia la derecha, luego vuelve.',
+  37:'Click dispara un proyectil que sale del botón hacia la derecha. Solo DOM, sin canvas.',
+  38:'Click para congelar: brillo helado, letter-spacing se cristaliza, luego vuelve a normal.',
+  39:'Click para jitter RGB rápido y un brillo eléctrico violento. Genial para acciones de peligro.',
+  40:'Click para cargar: se rellena con barra de progreso, muestra Listo ✓, luego reinicia.',
+  41:'Click para celebrar — 22 partículas de colores explotan radialmente y caen con gravedad.',
+  42:'Click: el botón se estrecha a un círculo, dibuja un ✓, se expande. Morph CSS + JS.',
+  43:'Sacudida violenta, se encoge hasta desaparecer y reaparece. Ideal para confirmaciones destructivas.',
+  44:'Ripple de Material Design: un anillo se expande desde el punto exacto del click. Suave.',
+  45:'Velo oscuro con un agujero radial que sigue el cursor, revelando el contenido debajo.',
+  46:'El botón se desplaza hacia el cursor en su zona. Vuelve con cubic-bezier al salir.',
+  47:'Un orbe radial suave persigue el cursor con retraso. Como una fuente de luz que sigue al ratón.',
+  48:'Pulso de doble golpe imita un latido real. Perfecto para botones de "like" y UIs de salud.',
+  49:'Llama la atención — oscila con escala y rotación. Ideal para badges y notificaciones.',
+  50:'Squash & stretch en ambos ejes. Orgánico y con rebote — perfecto para blobs de carga.',
+  51:'Over-stretch horizontal que vuelve. Principio clásico de animación de follow-through.',
+  52:'Entra en espiral desde escala cero con 720° de rotación. Entrada dramática y teatral.',
+  53:'Cada letra sube en una ola escalonada — solo CSS con animation-delay por carácter.',
+  54:'Gradiente animado barre el texto via background-clip. Vívido, sin JS.',
+  55:'Una capa clonada corta con clip-path en bandas horizontales aleatorias. Ruido puro.',
+  56:'Línea de seguimiento horizontal con aberración RGB. Inconfundible artefacto de los 80s.',
+  57:'Dos paneles se separan al hacer hover revelando el color de acento. Barrido estilo cine.',
+  58:'Un destello radial sigue el cursor dentro del botón. Se siente tridimensional.',
+  59:'Flip 3D completo al hacer hover revela la cara trasera. Usa rotateY + backface-visibility.',
+  60:'Loop fluido de border-radius — círculo a squircle a cuadrado y de vuelta. Hipnótico.',
+  61:'Barra de relleno horizontal clásica con barrido de destello. Anima 0→100% en bucle.',
+  62:'Placeholder de esqueleto multi-fila con barrido shimmer. Copia y adapta a cualquier layout.',
+  63:'Reloj de arena con clip-path que se voltea con rotateX a mitad. Icono de carga atemporal.',
+};
+let lang = 'en';
+const T = {
+  en: {
+    nav_effects:'effects', nav_about:'about',
+    hero_eyebrow:'css animation resources',
+    hero_desc:'A curated collection of <strong>CSS animations</strong> ready to drop into any project. Customize live — color, speed, size — then copy the exact code you need.',
+    stat_effects:'effects', stat_cats:'categories', stat_deps:'dependencies', stat_pure:'pure css',
+    cat_all:'all', cat_loader:'loaders', cat_hover:'hover', cat_text:'text',
+    cat_keyframe:'keyframes', cat_transform:'transforms', cat_glass:'glassmorphism',
+    cat_metallic:'metallic', cat_neon:'neon', cat_glitch:'glitch',
+    cat_interactive:'interactive', cat_cursor:'cursor',
+    about_proj_label:'the project', about_dev_label:'the dev', about_how_label:'how to use', about_how_title:'three steps',
+    about_proj_p1:'A personal library of CSS animations built and collected over time. Every snippet is copy-paste ready — customize it live, then grab your exact code.',
+    about_proj_p2:'No npm installs, no config files. Just CSS doing what it does best.',
+    about_dev_p:'Frontend developer focused on clean UI, CSS craft, and making the web feel alive. Based in Medellín, Colombia.',
+    about_how_steps:'1. Browse effects and click any card to open the live editor.<br>2. Adjust color, speed, size, opacity and border-radius in real time.<br>3. Hit <span style="color:var(--green)">copy code</span> — the snippet includes your exact custom values.',
+    modal_badge:'live editor', modal_preview:'preview',
+    copy_code:'copy code', copied:'copied!', close:'close',
+    copy_notice:'snippet copied with your values',
+    footer_copy:'built by andrew avilan — medellín, colombia',
+    lbl_color:'color', lbl_duration:'duration', lbl_size:'size', lbl_opacity:'opacity', lbl_radius:'radius',
+    lbl_customize:'customize', lbl_reset:'reset',
+    hint_copy:'customize & copy →', btn_copy:'copy',
+    all_effects:'all effects', n_effects:(n) => n + ' effect' + (n !== 1 ? 's' : ''),
+  },
+  es: {
+    nav_effects:'efectos', nav_about:'acerca',
+    hero_eyebrow:'recursos de animación css',
+    hero_desc:'Una colección curada de <strong>animaciones CSS</strong> listas para usar en cualquier proyecto. Personaliza en vivo — color, velocidad, tamaño — y copia el código exacto que necesitas.',
+    stat_effects:'efectos', stat_cats:'categorías', stat_deps:'dependencias', stat_pure:'css puro',
+    cat_all:'todos', cat_loader:'loaders', cat_hover:'hover', cat_text:'texto',
+    cat_keyframe:'keyframes', cat_transform:'transforms', cat_glass:'glassmorfismo',
+    cat_metallic:'metálico', cat_neon:'neon', cat_glitch:'glitch',
+    cat_interactive:'interactivo', cat_cursor:'cursor',
+    about_proj_label:'el proyecto', about_dev_label:'el dev', about_how_label:'cómo usarlo', about_how_title:'tres pasos',
+    about_proj_p1:'Una biblioteca personal de animaciones CSS construida con el tiempo. Cada snippet está listo para copiar y pegar — personalízalo en vivo y toma tu código exacto.',
+    about_proj_p2:'Sin npm installs, sin archivos de config. Solo CSS haciendo lo que mejor sabe hacer.',
+    about_dev_p:'Desarrollador frontend enfocado en UI limpia, CSS y hacer que la web se sienta viva. Basado en Medellín, Colombia.',
+    about_how_steps:'1. Explora los efectos y haz clic en cualquier tarjeta para abrir el editor.<br>2. Ajusta color, velocidad, tamaño, opacidad y radio en tiempo real.<br>3. Presiona <span style="color:var(--green)">copiar código</span> — el snippet incluye tus valores exactos.',
+    modal_badge:'editor en vivo', modal_preview:'vista previa',
+    copy_code:'copiar código', copied:'¡copiado!', close:'cerrar',
+    copy_notice:'snippet copiado con tus valores',
+    footer_copy:'hecho por andrew avilan — medellín, colombia',
+    lbl_color:'color', lbl_duration:'duración', lbl_size:'tamaño', lbl_opacity:'opacidad', lbl_radius:'radio',
+    lbl_customize:'personalizar', lbl_reset:'reset',
+    hint_copy:'personalizar y copiar →', btn_copy:'copiar',
+    all_effects:'todos los efectos', n_effects:(n) => n + ' efecto' + (n !== 1 ? 's' : ''),
+  }
+};
+function t(k) { return T[lang][k] !== undefined ? T[lang][k] : (T.en[k] !== undefined ? T.en[k] : k); }
+
+function applyLang() {
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.getElementById('opt-en').classList.toggle('active', lang === 'en');
+  document.getElementById('opt-es').classList.toggle('active', lang === 'es');
+}
+
+function setLang(l) {
+  lang = l;
+  applyLang();
+  renderGrid(currentCat);
+  if (currentEffect) { buildConfigPanel(); rebuildPreview(); }
+}
+
+/* ── State ── */
+let currentCat = 'all', currentEffect = null, currentTab = 'both', cfg = {};
+
+/* ── Grid ── */
+function renderGrid(cat) {
+  const grid = document.getElementById('effects-grid');
+  const filtered = cat === 'all' ? EFFECTS : EFFECTS.filter(e => e.cat === cat);
+  document.getElementById('cat-label').textContent = cat === 'all' ? t('all_effects') : t('cat_'+cat) || cat;
+  document.getElementById('cat-count').textContent = t('n_effects')(filtered.length);
+  grid.innerHTML = '';
+  filtered.forEach(e => {
+    const card = document.createElement('div');
+    card.className = 'effect-card';
+    const desc = lang === 'es' && DESC_ES[e.id] ? DESC_ES[e.id] : e.desc;
+    card.innerHTML = `<div class="card-preview" onclick="openModal(${e.id})"><span class="card-preview-hint">${t('hint_copy')}</span></div><div class="card-body"><div class="card-name">${e.name}</div><div class="card-desc">${desc}</div><div class="card-footer"><span class="tag">${t('cat_'+e.cat)||e.cat}</span><button class="copy-btn" id="cbtn-${e.id}" onclick="quickCopy(event,${e.id})">${t('btn_copy')}</button></div></div>`;
+    const prev = card.querySelector('.card-preview');
+    prev.insertBefore(e.buildPreview({...e.defaults}), prev.firstChild);
+    grid.appendChild(card);
+  });
+}
+
+function filterCat(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid(cat);
+}
+
+/* ── Config panel ── */
+function buildConfigPanel() {
+  const panel = document.getElementById('config-panel');
+  const hasAnim = currentEffect.defaults.duration > 0;
+  panel.innerHTML = `<div class="config-title"><span>${t('lbl_customize')}</span><button class="config-reset" onclick="resetCfg()">${t('lbl_reset')}</button></div>`;
+
+  const controls = [
+    { key:'color',    label:t('lbl_color'),    type:'color' },
+    { key:'duration', label:t('lbl_duration'), type:'range', min:0.1, max:6,  step:0.1, unit:'s',  skip:!hasAnim },
+    { key:'size',     label:t('lbl_size'),     type:'range', min:10,  max:90,  step:1,  unit:'px' },
+    { key:'opacity',  label:t('lbl_opacity'),  type:'range', min:0.1, max:1,   step:0.05, unit:'' },
+    { key:'radius',   label:t('lbl_radius'),   type:'range', min:0,   max:50,  step:1,  unit:'px' },
+    ...(currentEffect.customControls || []),
+  ];
+
+  controls.forEach(ctrl => {
+    if (ctrl.skip) return;
+    const row = document.createElement('div');
+    row.className = 'config-row';
+    if (ctrl.type === 'color') {
+      row.innerHTML = `<div class="config-label"><span>${ctrl.label}</span></div><div class="color-row"><input type="color" id="ctrl-${ctrl.key}" value="${cfg[ctrl.key]}" oninput="updateCfg('${ctrl.key}',this.value);document.getElementById('hex-${ctrl.key}').value=this.value"><input type="text" class="color-hex" id="hex-${ctrl.key}" value="${cfg[ctrl.key]}" maxlength="7" oninput="if(/^#[0-9a-fA-F]{6}$/.test(this.value)){document.getElementById('ctrl-${ctrl.key}').value=this.value;updateCfg('${ctrl.key}',this.value)}"></div>`;
+    } else {
+      row.innerHTML = `<div class="config-label"><span>${ctrl.label}</span><span class="config-val" id="val-${ctrl.key}">${cfg[ctrl.key]}${ctrl.unit}</span></div><input type="range" id="ctrl-${ctrl.key}" min="${ctrl.min}" max="${ctrl.max}" step="${ctrl.step}" value="${cfg[ctrl.key]}" oninput="updateCfg('${ctrl.key}',+this.value);document.getElementById('val-${ctrl.key}').textContent=this.value+'${ctrl.unit}'">`;
+    }
+    panel.appendChild(row);
+  });
+}
+
+function updateCfg(key, value) {
+  cfg[key] = value;
+  rebuildPreview();
+  updateCode();
+}
+
+function resetCfg() {
+  cfg = { ...currentEffect.defaults };
+  buildConfigPanel();
+  rebuildPreview();
+  updateCode();
+}
+
+function rebuildPreview() {
+  const prev = document.getElementById('modal-preview');
+  prev.innerHTML = `<span class="modal-preview-label">${t('modal_preview')}</span>`;
+  prev.appendChild(currentEffect.buildPreview({ ...cfg }));
+}
+
+/* ── Modal ── */
+function openModal(id) {
+  currentEffect = EFFECTS.find(e => e.id === id);
+  cfg = { ...currentEffect.defaults };
+  currentTab = 'both';
+  document.getElementById('modal-name').textContent = currentEffect.name;
+  buildConfigPanel();
+  rebuildPreview();
+  updateCode();
+  document.querySelectorAll('.modal-tab').forEach((t,i) => t.classList.toggle('active', i===2));
+  document.getElementById('modal-backdrop').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-backdrop').classList.remove('open');
+}
+
+function handleBackdropClick(e) {
+  if (e.target === document.getElementById('modal-backdrop')) closeModal();
+}
+
+function switchTab(tab, btn) {
+  currentTab = tab;
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  updateCode();
+}
+
+function updateCode() {
+  if (!currentEffect) return;
+  const h = currentEffect.html(cfg), c = currentEffect.css(cfg);
+  let content = currentTab === 'html' ? '<!-- HTML -->\n'+h : currentTab === 'css' ? '/* CSS */\n'+c : '<!-- HTML -->\n'+h+'\n\n\n/* CSS */\n'+c;
+  document.getElementById('modal-code').textContent = content;
+}
+
+function copyModal() {
+  if (!currentEffect) return;
+  const text = '<!-- HTML -->\n'+currentEffect.html(cfg)+'\n\n/* CSS */\n'+currentEffect.css(cfg);
+  navigator.clipboard.writeText(text).catch(()=>{});
+  const btn = document.getElementById('modal-copy-btn');
+  const notice = document.getElementById('copy-notice');
+  btn.textContent = t('copied');
+  notice.classList.add('show');
+  setTimeout(() => { btn.textContent = t('copy_code'); notice.classList.remove('show'); }, 2200);
+}
+
+function quickCopy(evt, id) {
+  evt.stopPropagation();
+  const e = EFFECTS.find(x => x.id === id);
+  const text = '<!-- HTML -->\n'+e.html(e.defaults)+'\n\n/* CSS */\n'+e.css(e.defaults);
+  navigator.clipboard.writeText(text).catch(()=>{});
+  const btn = document.getElementById('cbtn-'+id);
+  btn.textContent = t('copied'); btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = t('btn_copy'); btn.classList.remove('copied'); }, 1800);
+}
+
+function showSection(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-'+name).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+renderGrid('all');
+document.getElementById('total-count').textContent = EFFECTS.length;
+</script>
+</body>
+</html>
